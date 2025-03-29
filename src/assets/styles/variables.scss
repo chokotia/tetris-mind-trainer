@@ -1,0 +1,70 @@
+:root {
+  /* レイアウト変数 */
+  --layout-header-height: 50px;
+  --layout-footer-height: 120px;
+
+  /* カラー変数 */
+  --color-bg: #f4f4f4;
+  --color-board-bg: #333333;
+  --color-board-border: #cccccc;
+  --color-cell-default: #555555;
+  --color-next-bg: #444444;
+  --color-next-border: #555555;
+  --color-next-piece-bg: #555555;
+  --color-edit-selected-bg: #ffbf00;
+  --color-edit-selected-text: #333333;
+  --color-modal-header: #ffffff;
+  --color-button-focus: #ffbf00;
+  --color-ai-history-item: #f8f9fa;
+  --color-ai-history-selected: #d1e7ff;
+  --color-ai-history-hover: #e2e6ea;
+  
+  /* テトリスピースの色 */
+  --color-piece-i: #00f0f0;
+  --color-piece-o: #f0f000;
+  --color-piece-t: #a000f0;
+  --color-piece-l: #f0a000;
+  --color-piece-j: #0000f0;
+  --color-piece-s: #00f000;
+  --color-piece-z: #f00000;
+  --color-piece-g: #808080;
+
+  /* モバイル用ベース設定 - すべてのサイズ関連変数をここで定義 */
+  /* ゲーム要素のサイズ */
+  --size-cell-size: 24px;
+  --size-next-piece-width: 50px;
+  --size-next-piece-height: 25px;
+  --size-next-piece-block-size: 8px;
+  
+  /* パディングとマージン */
+  --spacing-modal: 1rem;
+  --spacing-container: 8px;
+  --spacing-button: 0.25rem 0.5rem;
+  --font-size-button: 0.875rem;
+  
+  /* その他のサイズ */
+  --size-ai-piece-type: 18px;
+  --font-size-ai-piece-type: 0.8rem;
+  --font-size-ai-move: 0.85em;
+  --size-ai-display-min-width: 150px;
+}
+
+/* タブレット向け */
+@media (min-width: 768px) {
+  :root {
+    --size-cell-size: 30px;
+    --size-next-piece-width: 60px;
+    --size-next-piece-height: 30px;
+    --size-next-piece-block-size: 10px;
+  }
+}
+
+/* デスクトップ向け */
+@media (min-width: 1024px) {
+  :root {
+    --size-cell-size: 36px;
+    --size-next-piece-width: 70px;
+    --size-next-piece-height: 35px;
+    --size-next-piece-block-size: 12px;
+  }
+} 
