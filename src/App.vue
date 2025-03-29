@@ -31,6 +31,7 @@
             class="btn btn-outline-light d-flex align-items-center"
             type="button"
             aria-label="設定を開く"
+            @click="openSettingsModal"
           >
             <i class="bi bi-gear"></i>
           </button>
@@ -99,14 +100,37 @@
         </div>
       </div>
     </footer>
+
+    <SettingsModal ref="settingsModal" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import SettingsModal from '@/components/SettingsModal.vue';
+import '@/types/bootstrap';
 
 export default defineComponent({
   name: 'App',
+  components: {
+    SettingsModal,
+  },
+  setup() {
+    const settingsModal = ref<HTMLElement | null>(null);
+
+    const openSettingsModal = () => {
+      const modalElement = document.getElementById('settings-modal');
+      if (modalElement && window.bootstrap?.Modal) {
+        const bootstrapModal = new window.bootstrap.Modal(modalElement);
+        bootstrapModal.show();
+      }
+    };
+
+    return {
+      settingsModal,
+      openSettingsModal,
+    };
+  },
 });
 </script>
 

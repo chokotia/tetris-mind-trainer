@@ -2,5 +2,9 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import store from './store';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
 
-createApp(App).use(store).mount('#app');
+const app = createApp(App);
+app.use(store);
+app.mount('#app');

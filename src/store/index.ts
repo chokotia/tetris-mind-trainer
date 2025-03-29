@@ -1,14 +1,13 @@
 import { createStore } from 'vuex';
+import settings, { State } from './modules/settings';
 
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+// ルートストアの型定義
+export interface RootState {
+  settings: State;
+}
+
+export default createStore<RootState>({
   modules: {
+    settings,
   },
 });
