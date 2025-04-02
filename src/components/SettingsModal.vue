@@ -7,56 +7,60 @@
     @cancel="handleCancel"
   >
     <form class="modal-body">
-      <h3 class="fs-6 mb-3">盤面設定</h3>
+      <h3 class="fs-6 mb-3">AI：</h3>
       <div class="mb-3">
-        <label class="form-label" for="board-width">
-          幅:
-          <input
-            id="board-width"
-            type="range"
-            class="form-range flex-grow-1"
-            :min="BOARD_CONSTRAINTS.MIN_WIDTH"
-            :max="BOARD_CONSTRAINTS.MAX_WIDTH"
-            :value="tempSettings.boardSettings.width"
-            @input="changeTempSettings('boardSettings.width', $event)"
-          />
-          <output for="board-width" class="badge bg-secondary">
-            {{ tempSettings.boardSettings.width }}
-          </output>
+        <label class="form-label" for="ai-weights-name">
+          使用する重み:
+          <select
+            id="ai-weights-name"
+            class="form-select"
+            :value="tempSettings.aiSettings.weightsName"
+            @change="changeTempSettings('aiSettings.weightsName', $event)"
+          >
+            <option value="freybot">freybot</option>
+            <option value="rightWellFlat">右端空け平積み</option>
+            <option value="cc_standard_like">cold clear(standard) like</option>
+            <option value="cc_fast_like">cold clear(fast-ver) like</option>
+          </select>
         </label>
       </div>
       <div class="mb-3">
-        <label class="form-label" for="board-height">
-          高さ:
-          <input
-            id="board-height"
-            type="range"
-            class="form-range flex-grow-1"
-            :min="BOARD_CONSTRAINTS.MIN_HEIGHT"
-            :max="BOARD_CONSTRAINTS.MAX_HEIGHT"
-            :value="tempSettings.boardSettings.height"
-            @input="changeTempSettings('boardSettings.height', $event)"
-          />
-          <output for="board-height" class="badge bg-secondary">
-            {{ tempSettings.boardSettings.height }}
-          </output>
+        <label class="form-label d-flex flex-column" for="ai-search-time">
+          1手当たりの思考時間 [秒]:
+          <div class="d-flex align-items-center">
+            <input
+              id="ai-search-time"
+              type="range"
+              class="form-range flex-grow-1"
+              min="0.5"
+              max="2"
+              step="0.5"
+              :value="tempSettings.aiSettings.searchTime"
+              @input="changeTempSettings('aiSettings.searchTime', $event)"
+            />
+            <output for="ai-search-time" class="badge bg-secondary ms-2">
+              {{ tempSettings.aiSettings.searchTime }}
+            </output>
+          </div>
         </label>
       </div>
       <div class="mb-3">
-        <label class="form-label" for="board-next-count">
-          ネクスト表示数:
-          <input
-            id="board-next-count"
-            type="range"
-            class="form-range flex-grow-1"
-            :min="BOARD_CONSTRAINTS.MIN_NEXT_COUNT"
-            :max="BOARD_CONSTRAINTS.MAX_NEXT_COUNT"
-            :value="tempSettings.boardSettings.nextCount"
-            @input="changeTempSettings('boardSettings.nextCount', $event)"
-          />
-          <output for="board-next-count" class="badge bg-secondary">
-            {{ tempSettings.boardSettings.nextCount }}
-          </output>
+        <label class="form-label d-flex flex-column" for="ai-moves-count">
+          算出手数:
+          <div class="d-flex align-items-center">
+            <input
+              id="ai-moves-count"
+              type="range"
+              class="form-range flex-grow-1"
+              min="1"
+              max="60"
+              :value="tempSettings.aiSettings.movesCount"
+              @input="changeTempSettings('aiSettings.movesCount', $event)"
+            />
+            <output for="ai-moves-count" class="badge bg-secondary ms-2">
+              {{ tempSettings.aiSettings.movesCount }}
+            </output>
+          </div>
         </label>
       </div>
     </form>
