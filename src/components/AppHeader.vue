@@ -1,5 +1,5 @@
 <template>
-  <header class="header navbar navbar-dark bg-dark fixed-top">
+  <header class="app-header navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <div class="d-flex align-items-center justify-content-between w-100">
         <div class="d-flex align-items-center">
@@ -59,7 +59,7 @@ const openSettingsModal = () => {
 </script>
 
 <style lang="scss">
-.header {
+.app-header {
   height: var(--layout-header-height);
   min-height: var(--layout-header-height);
 }

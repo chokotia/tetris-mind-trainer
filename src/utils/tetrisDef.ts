@@ -1,3 +1,9 @@
+export const BOARD_WIDTH = 10;
+export const BOARD_HEIGHT = 20;
+
+export type MINO_TYPE = 'I' | 'O' | 'T' | 'L' | 'J' | 'S' | 'Z';
+export type BLOCK_TYPE = MINO_TYPE | null | 'GRAY' | 'WHITE';
+
 /**
  * ミノ生成モードの値定義
  */
@@ -71,4 +77,14 @@ export const TETRIS_RULES = {
     MAX_COUNT: 30,
   },
   TOTAL_NEXT_COUNT: 100,
+} as const;
+
+export const BLOCK_COLORS = {
+  1: '#FF0000', // 赤
+  2: '#00FF00', // 緑
+  3: '#0000FF', // 青
+  4: '#FFFF00', // 黄
+  5: '#FF00FF', // マゼンタ
+  6: '#00FFFF', // シアン
+  7: '#FFA500', // オレンジ
 } as const;
