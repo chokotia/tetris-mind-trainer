@@ -1,16 +1,19 @@
 import { createStore } from 'vuex';
 import settings, { State as SettingsState } from './modules/settings';
-// import board, { State as BoardState } from './modules/board';
+import tetrisBoard, { TetrisBoardState } from './modules/tetrisBoard';
+import drawMode, { DrawModeState } from './modules/drawMode';
 
 // ルートストアの型定義
 export interface RootState {
   settings: SettingsState;
-  // board: BoardState;
+  tetrisBoard: TetrisBoardState;
+  drawMode: DrawModeState;
 }
 
 export default createStore<RootState>({
   modules: {
     settings,
-    // board,
+    tetrisBoard,
+    drawMode,
   },
 });

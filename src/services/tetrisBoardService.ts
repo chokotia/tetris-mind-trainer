@@ -1,13 +1,17 @@
-import type { TetrisBoardCellType, DrawModeType } from '../types/tetris';
+import { computed } from 'vue';
+import { Store } from 'vuex';
+import type { TetrisBoardCellType, DrawModeType, XYCoordinates } from '../types/tetris';
 import { DRAW_MODE, TetrisBoardCell } from '../utils/tetrisDef';
+import type { RootState } from '../store';
 
 const drawCell = (
-  board: TetrisBoardCellType[][],
-  x: number,
-  y: number,
+  coordinates: XYCoordinates,
   mode: DrawModeType,
-): TetrisBoardCellType[][] => {
-  const newBoard = board.map((row) => [...row]);
+  store: Store<RootState>,
+): void => {
+  const { x, y } = coordinates;
+  const tetrisBoard = computed(() => store.getters['tetrisBoard/tetrisBoard']);
+  const newBoard = tetrisBoard.value.map((row: TetrisBoardCellType[]) => [...row]);
 
   switch (mode) {
     case DRAW_MODE.GRAY:
@@ -24,7 +28,7 @@ const drawCell = (
       throw new Error(`Invalid draw mode: ${mode}`);
   }
 
-  return newBoard;
+  store.commit('tetrisBoard/SET_TETRIS_BOARD', newBoard);
 };
 
 export default drawCell;

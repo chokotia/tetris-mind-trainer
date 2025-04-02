@@ -24,16 +24,20 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useStore } from 'vuex';
 import { BOARD_WIDTH, BOARD_HEIGHT } from '../utils/tetrisDef';
 import type { TetrisBoardCellType } from '../types/tetris';
 import { useTetrisBoard } from '../composables/useTetrisBoard';
 
 const {
-  tetrisBoard,
   onMouseDown,
   onMouseMove,
   onMouseUp,
 } = useTetrisBoard();
+
+// Vuexから状態を取得
+const store = useStore();
+const tetrisBoard = computed(() => store.getters['tetrisBoard/tetrisBoard']);
 
 // スタイル関連の定義
 const boardStyle = computed(() => ({
