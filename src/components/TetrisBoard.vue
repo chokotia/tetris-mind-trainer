@@ -1,5 +1,4 @@
 <template>
-    <div class="version">4</div>
     <div
       class="tetris-board"
       :style="boardStyle"

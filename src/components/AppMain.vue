@@ -1,16 +1,21 @@
 <template>
   <main class="app-main d-flex flex-column justify-content-center align-items-center">
-    <div class="board-container d-flex flex-row justify-content-center align-items-center">
-      <TetrisBoard ref="tetrisBoard" />
+    <div class="game-container d-flex flex-row justify-content-center align-items-start">
+      <div class="board-container">
+        <TetrisBoard />
+      </div>
+      <div class="hold-next-container">
+        <TetrisHold />
+        <TetrisNext />
+      </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import TetrisBoard from './TetrisBoard.vue';
-
-const tetrisBoard = ref();
+import TetrisHold from './TetrisHold.vue';
+import TetrisNext from './TetrisNext.vue';
 </script>
 
 <style scoped>
@@ -22,7 +27,17 @@ const tetrisBoard = ref();
   overflow: auto;
 }
 
+.game-container {
+  gap: var(--game-elements-gap, 20px);
+}
+
 .board-container {
   min-height: 100%;
+}
+
+.hold-next-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--game-elements-gap, 0px);
 }
 </style>
