@@ -28,7 +28,7 @@ import TetrisNext from './TetrisNext.vue';
 }
 
 .game-container {
-  gap: var(--game-elements-gap, 20px);
+  gap: var(--game-elements-gap, 0px);
 }
 
 .board-container {

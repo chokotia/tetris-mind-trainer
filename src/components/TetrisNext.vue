@@ -104,7 +104,7 @@ const getPieceRows = (piece: MinoType) => {
 .next-piece {
   width: calc(var(--size-next-hold-cell-vh) * 4);
   height: calc(var(--size-next-hold-cell-vh) * 4);
-  /* background-color: rgba(0, 0, 0, 0.5); */
+  background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid #444;
   display: grid;
   grid-template-rows: repeat(4, 1fr);
@@ -121,8 +121,8 @@ const getPieceRows = (piece: MinoType) => {
 .piece-cell {
   width: var(--size-next-hold-cell-vh);
   height: var(--size-next-hold-cell-vh);
-  /* background-color: rgba(0, 0, 0, 0.3); */
-  /* border: 1px solid #444; */
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #444;
   user-select: none;
 }
 
