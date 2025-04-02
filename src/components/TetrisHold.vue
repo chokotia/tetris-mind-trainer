@@ -18,24 +18,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { MINO, MINO_SHAPES } from '../utils/tetrisDef';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { MINO_SHAPES } from '../utils/tetrisDef';
 import type { MinoType } from '../types/tetris';
 
-// テスト用にIミノを設定
-const holdPiece = ref<MinoType>(MINO.O);
+const store = useStore();
+const holdPiece = computed(() => store.getters['tetrisBoard/holdMino']);
 
 // 4x4のグリッドに変換
 const pieceCells = computed(() => {
-  const shape = MINO_SHAPES[holdPiece.value];
+  const shape = MINO_SHAPES[holdPiece.value as MinoType];
+  if (!shape) return Array(16).fill(0);
   const cells = Array(16).fill(0);
 
   // 形状を中央に配置
   const offsetX = Math.floor((4 - shape[0].length) / 2);
   const offsetY = Math.floor((4 - shape.length) / 2);
 
-  shape.forEach((row, y) => {
-    row.forEach((cell, x) => {
+  shape.forEach((row: number[], y: number) => {
+    row.forEach((cell: number, x: number) => {
       if (cell) {
         const index = (y + offsetY) * 4 + (x + offsetX);
         cells[index] = 1;

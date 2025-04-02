@@ -21,18 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { MINO, MINO_SHAPES } from '../utils/tetrisDef';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { MINO_SHAPES } from '../utils/tetrisDef';
 import type { MinoType } from '../types/tetris';
 
-// テスト用に5つのミノを設定
-const nextPieces = ref<MinoType[]>([
-  MINO.I,
-  MINO.O,
-  MINO.T,
-  MINO.L,
-  MINO.J,
-]);
+const store = useStore();
+const nextPieces = computed(() => store.getters['tetrisBoard/nextMino'].slice(0, 5));
 
 // 4x4のグリッドに変換する関数
 const getPieceRows = (piece: MinoType) => {
