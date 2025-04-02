@@ -7,6 +7,7 @@
           :key="index"
           class="piece-cell"
           :class="{ filled: cell }"
+          :data-piece="cell ? holdPiece : ''"
         />
       </div>
     </div>
@@ -18,44 +19,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { MINO } from '../utils/tetrisDef';
+import { MINO, MINO_SHAPES } from '../utils/tetrisDef';
 import type { MinoType } from '../types/tetris';
 
 // テスト用にIミノを設定
-const holdPiece = ref<MinoType>(MINO.I);
-
-// ミノの形状定義（簡略化版）
-const MINO_SHAPES = {
-  I: [
-    [1, 1, 1, 1],
-  ],
-  O: [
-    [1, 1],
-    [1, 1],
-  ],
-  T: [
-    [0, 1, 0],
-    [1, 1, 1],
-  ],
-  L: [
-    [1, 0],
-    [1, 0],
-    [1, 1],
-  ],
-  J: [
-    [0, 1],
-    [0, 1],
-    [1, 1],
-  ],
-  S: [
-    [0, 1, 1],
-    [1, 1, 0],
-  ],
-  Z: [
-    [1, 1, 0],
-    [0, 1, 1],
-  ],
-};
+const holdPiece = ref<MinoType>(MINO.O);
 
 // 4x4のグリッドに変換
 const pieceCells = computed(() => {
@@ -81,8 +49,8 @@ const pieceCells = computed(() => {
 
 <style scoped>
 .tetris-hold {
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 2px solid #666;
+  background-color: #282828;
+  /* border: 2px solid #666; */
   border-radius: 4px;
   padding: 10px;
   margin: 10px;
@@ -91,12 +59,10 @@ const pieceCells = computed(() => {
 .hold-piece {
   width: calc(var(--size-next-hold-cell-vh) * 4);
   height: calc(var(--size-next-hold-cell-vh) * 4);
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 1px solid #444;
+  /* background-color: #333; */
+  /* border: 0px solid #444; */
   display: grid;
   grid-template-rows: repeat(4, 1fr);
-  gap: 0px;
-  padding: 1px;
 }
 
 .hold-piece.empty {
@@ -112,19 +78,49 @@ const pieceCells = computed(() => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  gap: 0px;
 }
 
 .piece-cell {
   width: var(--size-next-hold-cell-vh);
   height: var(--size-next-hold-cell-vh);
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid #444;
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  /* border: 1px solid #444; */
   user-select: none;
 }
 
-.piece-cell.filled {
+/* ミノタイプに応じた色を設定 */
+.piece-cell.filled[data-piece="I"] {
   background-color: var(--color-piece-i);
   border: 1px solid var(--color-piece-i);
+}
+
+.piece-cell.filled[data-piece="O"] {
+  background-color: var(--color-piece-o);
+  border: 1px solid var(--color-piece-o);
+}
+
+.piece-cell.filled[data-piece="T"] {
+  background-color: var(--color-piece-t);
+  border: 1px solid var(--color-piece-t);
+}
+
+.piece-cell.filled[data-piece="L"] {
+  background-color: var(--color-piece-l);
+  border: 1px solid var(--color-piece-l);
+}
+
+.piece-cell.filled[data-piece="J"] {
+  background-color: var(--color-piece-j);
+  border: 1px solid var(--color-piece-j);
+}
+
+.piece-cell.filled[data-piece="S"] {
+  background-color: var(--color-piece-s);
+  border: 1px solid var(--color-piece-s);
+}
+
+.piece-cell.filled[data-piece="Z"] {
+  background-color: var(--color-piece-z);
+  border: 1px solid var(--color-piece-z);
 }
 </style>

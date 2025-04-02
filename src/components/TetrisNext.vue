@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { MINO } from '../utils/tetrisDef';
+import { MINO, MINO_SHAPES } from '../utils/tetrisDef';
 import type { MinoType } from '../types/tetris';
 
 // テスト用に5つのミノを設定
@@ -33,37 +33,6 @@ const nextPieces = ref<MinoType[]>([
   MINO.L,
   MINO.J,
 ]);
-
-// ミノの形状定義（簡略化版）
-const MINO_SHAPES = {
-  I: [
-    [1, 1, 1, 1],
-  ],
-  O: [
-    [1, 1],
-    [1, 1],
-  ],
-  T: [
-    [0, 1, 0],
-    [1, 1, 1],
-  ],
-  L: [
-    [0, 0, 1],
-    [1, 1, 1],
-  ],
-  J: [
-    [1, 0, 0],
-    [1, 1, 1],
-  ],
-  S: [
-    [0, 1, 1],
-    [1, 1, 0],
-  ],
-  Z: [
-    [1, 1, 0],
-    [0, 1, 1],
-  ],
-};
 
 // 4x4のグリッドに変換する関数
 const getPieceRows = (piece: MinoType) => {
@@ -88,8 +57,7 @@ const getPieceRows = (piece: MinoType) => {
 
 <style scoped>
 .tetris-next {
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 2px solid #666;
+  background-color: #282828;
   border-radius: 4px;
   padding: 10px;
   margin: 10px;
@@ -98,31 +66,28 @@ const getPieceRows = (piece: MinoType) => {
 .next-pieces {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  /* gap: 10px; */
 }
 
 .next-piece {
   width: calc(var(--size-next-hold-cell-vh) * 4);
   height: calc(var(--size-next-hold-cell-vh) * 4);
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 1px solid #444;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* border: 0px solid #444; */
   display: grid;
   grid-template-rows: repeat(4, 1fr);
-  gap: 0px;
-  padding: 1px;
 }
 
 .piece-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0px;
 }
 
 .piece-cell {
   width: var(--size-next-hold-cell-vh);
   height: var(--size-next-hold-cell-vh);
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid #444;
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  /* border: 1px solid #444; */
   user-select: none;
 }
 
