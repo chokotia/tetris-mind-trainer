@@ -1,8 +1,8 @@
-import { MINO_TYPE, BLOCK_TYPE } from '../utils/tetrisDef';
+import { MinoType, TetrisBoardCellType } from '../types/tetris';
 
 export interface BoardState {
-  hold: MINO_TYPE | null;
-  next: (MINO_TYPE | null)[];
-  grid: BLOCK_TYPE[][];
+  hold: MinoType | null;
+  next: (MinoType | null)[];
+  grid: TetrisBoardCellType[][];
   isGridHidden: boolean;
 }

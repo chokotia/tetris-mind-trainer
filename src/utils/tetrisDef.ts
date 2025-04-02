@@ -1,38 +1,66 @@
+/**
+ * 盤面の幅と高さ
+ */
 export const BOARD_WIDTH = 10;
 export const BOARD_HEIGHT = 20;
 
-export type MINO_TYPE = 'I' | 'O' | 'T' | 'L' | 'J' | 'S' | 'Z';
-export type BLOCK_TYPE = MINO_TYPE | null | 'GRAY' | 'WHITE';
-
 /**
- * ミノ生成モードの値定義
+ * ネクストキューの生成モード
  */
-export const MINO_MODE = {
+export const QUEUE_GENERATION_MODE = {
   RANDOM: 'random',
   SEVEN_BAG_RANDOM: '7bag-random',
   SEVEN_BAG_PURE: '7bag-pure',
 } as const;
 
 /**
- * ミノ生成モードの型定義
+ * 描画モード
  */
-export type MINO_MODE_TYPE = typeof MINO_MODE[keyof typeof MINO_MODE];
+export const DRAW_MODE = {
+  AUTO: 'Auto',
+  GRAY: 'Gray',
+  DELETE: 'Delete',
+} as const;
+
+/**
+ * ミノの種類
+ */
+export const MINO = {
+  I: 'I',
+  O: 'O',
+  T: 'T',
+  L: 'L',
+  J: 'J',
+  S: 'S',
+  Z: 'Z',
+} as const;
+
+/**
+ * 盤面のセルの型
+ */
+export const TetrisBoardCell = {
+  I: 'I',
+  O: 'O',
+  T: 'T',
+  L: 'L',
+  J: 'J',
+  S: 'S',
+  Z: 'Z',
+  GRAY: 'GRAY',
+  WHITE: 'WHITE',
+  NULL: null,
+} as const;
 
 /**
  * AIの重み付けの値定義
  */
-export const AiWeight = {
+export const AI_WEIGHT = {
   DEFAULT: 'default',
   RIGHT_WELL_FLAT: 'rightWellFlat',
   STABLE_STACK: 'stableStack',
   CC_STANDARD_LIKE: 'cc_standard_like',
   CC_FAST_LIKE: 'cc_fast_like',
 } as const;
-
-/**
- * AIの重み付けの型定義
- */
-export type AiWeightType = typeof AiWeight[keyof typeof AiWeight];
 
 /**
  * 盤面の制約値定義
@@ -79,12 +107,9 @@ export const TETRIS_RULES = {
   TOTAL_NEXT_COUNT: 100,
 } as const;
 
-export const BLOCK_COLORS = {
-  1: '#FF0000', // 赤
-  2: '#00FF00', // 緑
-  3: '#0000FF', // 青
-  4: '#FFFF00', // 黄
-  5: '#FF00FF', // マゼンタ
-  6: '#00FFFF', // シアン
-  7: '#FFA500', // オレンジ
-} as const;
+/**
+ * 空の盤面
+ */
+export const EMPTY_TETRIS_BOARD = Array(BOARD_HEIGHT)
+  .fill(undefined)
+  .map(() => Array(BOARD_WIDTH).fill(undefined));
