@@ -47,28 +47,6 @@ const getCellStyle = (cellValue: TetrisBoardCellType) => {
     backgroundColor: `var(--color-piece-${cellValue.toLowerCase()})`,
   };
 };
-
-// 開発環境でのテストデータ設定
-if (process.env.NODE_ENV === 'development') {
-  const setDummyData = () => {
-    const board = tetrisBoard.value;
-    board[19][5] = 'I';
-    board[19][6] = 'I';
-    board[19][7] = 'I';
-    board[19][8] = 'I';
-
-    board[18][2] = 'S';
-    board[18][3] = 'S';
-    board[19][3] = 'S';
-    board[19][4] = 'S';
-
-    board[18][1] = 'T';
-    board[19][0] = 'T';
-    board[19][1] = 'T';
-    board[19][2] = 'T';
-  };
-  setDummyData();
-}
 </script>
 
 <style scoped>

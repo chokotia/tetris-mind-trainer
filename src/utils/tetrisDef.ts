@@ -113,3 +113,18 @@ export const TETRIS_RULES = {
 export const EMPTY_TETRIS_BOARD = Array(BOARD_HEIGHT)
   .fill(undefined)
   .map(() => Array(BOARD_WIDTH).fill(undefined));
+
+/**
+ * テスト用の盤面
+ */
+export const TEST_TETRIS_BOARD = Array(BOARD_HEIGHT)
+  .fill(undefined)
+  .map((_, rowIndex) => {
+    if (rowIndex === 18) {
+      return [undefined, 'T', 'S', 'S', undefined, undefined, undefined, undefined, undefined, undefined];
+    }
+    if (rowIndex === 19) {
+      return ['T', 'T', 'T', 'S', 'S', 'I', 'I', 'I', 'I', undefined];
+    }
+    return Array(BOARD_WIDTH).fill(undefined);
+  });

@@ -2,7 +2,8 @@ import { ref } from 'vue';
 import {
   BOARD_WIDTH,
   BOARD_HEIGHT,
-  EMPTY_TETRIS_BOARD,
+  // EMPTY_TETRIS_BOARD,
+  TEST_TETRIS_BOARD,
   DRAW_MODE,
 } from '../utils/tetrisDef';
 import type { XYCoordinates, DrawModeType } from '../types/tetris';
@@ -10,7 +11,8 @@ import drawCell from '../services/tetrisBoardService';
 
 export const useTetrisBoard = () => {
   // 状態管理
-  const tetrisBoard = ref(EMPTY_TETRIS_BOARD.map((row) => [...row]));
+  // const tetrisBoard = ref(EMPTY_TETRIS_BOARD.map((row) => [...row]));
+  const tetrisBoard = ref(TEST_TETRIS_BOARD.map((row) => [...row]));
   const isDragging = ref(false);
   const isStartedInsideBoard = ref(false);
   const currentDrawMode = ref<DrawModeType>(DRAW_MODE.GRAY);
