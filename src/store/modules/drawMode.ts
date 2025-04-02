@@ -8,7 +8,7 @@ export interface DrawModeState {
 export default {
   namespaced: true,
   state: {
-    drawMode: DRAW_MODE.GRAY,
+    drawMode: DRAW_MODE.AUTO,
   },
 
   mutations: {
