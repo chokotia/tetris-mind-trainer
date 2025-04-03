@@ -26,6 +26,7 @@
             class="btn btn-outline-light me-2"
             type="button"
             aria-label="AIに最適な手を求める"
+            @click="openAiModal"
           >
             <i class="bi bi-robot"></i>
           </button>
@@ -45,16 +46,25 @@
   <SettingsModal
     ref="settingsModalRef"
   />
+  <AiModal
+    ref="aiModalRef"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import SettingsModal from '@/components/SettingsModal.vue';
+import AiModal from '@/components/AiModal.vue';
 
 const settingsModalRef = ref<InstanceType<typeof SettingsModal> | null>(null);
+const aiModalRef = ref<InstanceType<typeof AiModal> | null>(null);
 
 const openSettingsModal = () => {
   settingsModalRef.value?.open();
+};
+
+const openAiModal = () => {
+  aiModalRef.value?.open();
 };
 </script>
 
