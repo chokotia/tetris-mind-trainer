@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import drawCell from '@/services/tetrisBoardService';
+import drawCell from '@/services/drawBoardCellService';
 import {
   BOARD_WIDTH,
   BOARD_HEIGHT,
