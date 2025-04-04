@@ -72,7 +72,6 @@ import { computed, defineExpose, ref } from 'vue';
 import { useStore } from 'vuex';
 import { BModal } from 'bootstrap-vue-next';
 import type { Settings } from '@/types/settings';
-import { BOARD_CONSTRAINTS } from '@/utils/tetrisDef';
 
 const store = useStore();
 const settings = computed(() => store.state.settings.settings as Settings);

@@ -1,4 +1,6 @@
-import { QUEUE_GENERATION_MODE, AI_WEIGHT, DRAW_MODE, MINO, TETRIS_BOARD_CELL } from '../utils/tetrisDef';
+import {
+  QUEUE_GEN_MODE, AI_WEIGHT, DRAW_MODE, MINO, TETRIS_BOARD_CELL,
+} from '../utils/tetrisDef';
 
 // セルの座標
 export type XYCoordinates = {
@@ -22,7 +24,7 @@ export type QueueType = MinoType[];
 export type DrawModeType = typeof DRAW_MODE[keyof typeof DRAW_MODE];
 
 // ネクストキューの生成モード
-export type QueueGenerationModeType = typeof QUEUE_GENERATION_MODE[keyof typeof QUEUE_GENERATION_MODE];
+export type QueueGenModeType = typeof QUEUE_GEN_MODE[keyof typeof QUEUE_GEN_MODE];
 
 // AIの重み付けの型定義
 export type AiWeightType = typeof AI_WEIGHT[keyof typeof AI_WEIGHT];

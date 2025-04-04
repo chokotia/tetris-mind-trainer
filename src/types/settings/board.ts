@@ -1,4 +1,4 @@
-import { QueueGenerationModeType } from '../../types/tetris';
+import { QueueGenModeType } from '../tetris';
 
 export interface BoardSettings {
   width: number;
@@ -8,5 +8,5 @@ export interface BoardSettings {
     min: number;
     max: number;
   };
-  minoMode: QueueGenerationModeType;
+  minoMode: QueueGenModeType;
 }

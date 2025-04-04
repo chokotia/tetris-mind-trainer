@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { Store } from 'vuex';
 import type { TetrisBoardCellType, DrawModeType, XYCoordinates } from '../types/tetris';
-import { DRAW_MODE, TetrisBoardCell, MINO } from '../utils/tetrisDef';
+import { DRAW_MODE, MINO, TETRIS_BOARD_CELL } from '../utils/tetrisDef';
 import type { RootState } from '../store';
 
 type MinoShape = readonly [number, number][];
@@ -48,7 +48,7 @@ const getWhiteCells = (board: TetrisBoardCellType[][]): XYCoordinates[] => {
   const whiteCells: XYCoordinates[] = [];
   for (let y = 0; y < board.length; y += 1) {
     for (let x = 0; x < board[y].length; x += 1) {
-      if (board[y][x] === TetrisBoardCell.WHITE) {
+      if (board[y][x] === TETRIS_BOARD_CELL.WHITE) {
         whiteCells.push({ x, y });
       }
     }
@@ -114,21 +114,21 @@ const drawCell = (
 
   switch (mode) {
     case DRAW_MODE.GRAY: {
-      newBoard[y][x] = TetrisBoardCell.GRAY;
+      newBoard[y][x] = TETRIS_BOARD_CELL.GRAY;
       break;
     }
     case DRAW_MODE.DELETE: {
-      newBoard[y][x] = TetrisBoardCell.NULL;
+      newBoard[y][x] = TETRIS_BOARD_CELL.NULL;
       break;
     }
     case DRAW_MODE.AUTO: {
       // すでに色がついているセル（null以外のセル）には塗れない
-      if (newBoard[y][x] !== TetrisBoardCell.NULL) {
+      if (newBoard[y][x] !== TETRIS_BOARD_CELL.NULL) {
         return;
       }
 
       // 白いセルを追加
-      newBoard[y][x] = TetrisBoardCell.WHITE;
+      newBoard[y][x] = TETRIS_BOARD_CELL.WHITE;
 
       // 白いセルを取得
       const whiteCells = getWhiteCells(newBoard);
@@ -137,14 +137,14 @@ const drawCell = (
       if (whiteCells.length > 4) {
         // ※ ここには来ないはずだが念のため
         whiteCells.forEach((cell) => {
-          newBoard[cell.y][cell.x] = TetrisBoardCell.NULL;
+          newBoard[cell.y][cell.x] = TETRIS_BOARD_CELL.NULL;
         });
       } else if (whiteCells.length === 4) { // 白いセルが4つになった場合、ミノの形状をチェック
         const matchingMino = getMatchingMino(whiteCells);
         if (matchingMino) {
           // マッチするミノが見つかった場合、その色に変更
           whiteCells.forEach((cell) => {
-            newBoard[cell.y][cell.x] = TetrisBoardCell[matchingMino];
+            newBoard[cell.y][cell.x] = TETRIS_BOARD_CELL[matchingMino];
           });
         }
       }

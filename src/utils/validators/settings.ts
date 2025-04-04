@@ -1,6 +1,6 @@
 import { Settings, BoardSettings, AISettings } from '../../types/settings';
 import {
-  QUEUE_GENERATION_MODE, BOARD_CONSTRAINTS, AI_CONSTRAINTS,
+  QUEUE_GEN_MODE, BOARD_CONSTRAINTS, AI_CONSTRAINTS,
 } from '../tetrisDef';
 
 export function validateAISettings(aiSettings: AISettings): boolean {
@@ -39,7 +39,7 @@ export function validateBoardSettings(boardSettings: BoardSettings): boolean {
     && boardSettings.blockRange.min <= boardSettings.blockRange.max
   );
 
-  const isValidMinoMode = Object.values(QUEUE_GENERATION_MODE).includes(boardSettings.minoMode);
+  const isValidMinoMode = Object.values(QUEUE_GEN_MODE).includes(boardSettings.minoMode);
 
   return isValidBoardSize && isValidNextCount && isValidBlockRange && isValidMinoMode;
 }

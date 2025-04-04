@@ -1,4 +1,4 @@
-import { AiWeightType } from '../../types/tetris';
+import { AiWeightType } from '../tetris';
 
 export interface AISettings {
   searchTime: number;

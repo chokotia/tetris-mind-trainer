@@ -1,4 +1,4 @@
-import { MinoType, TetrisBoardCellType } from '../types/tetris';
+import { MinoType, TetrisBoardCellType } from './tetris';
 
 export interface BoardState {
   hold: MinoType | null;

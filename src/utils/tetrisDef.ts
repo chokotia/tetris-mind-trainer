@@ -7,7 +7,7 @@ export const BOARD_HEIGHT = 20;
 /**
  * ネクストキューの生成モード
  */
-export const QUEUE_GENERATION_MODE = {
+export const QUEUE_GEN_MODE = {
   RANDOM: 'random',
   SEVEN_BAG_RANDOM: '7bag-random',
   SEVEN_BAG_PURE: '7bag-pure',

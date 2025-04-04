@@ -1,5 +1,5 @@
 import { Store } from 'vuex';
-import type { TetrisBoardCellType, MinoType } from '../types/tetris';
+import type { MinoType } from '../types/tetris';
 import { MINO, TEST_TETRIS_BOARD } from '../utils/tetrisDef';
 import type { RootState } from '../store';
 

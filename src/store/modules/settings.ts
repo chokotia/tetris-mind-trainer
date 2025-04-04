@@ -1,5 +1,5 @@
 import { ActionContext } from 'vuex';
-import { QUEUE_GENERATION_MODE, AI_WEIGHT } from '../../utils/tetrisDef';
+import { QUEUE_GEN_MODE, AI_WEIGHT } from '../../utils/tetrisDef';
 import { Settings } from '../../types/settings';
 import { validateSettings } from '../../utils/validators/settings';
 import storage from '../../utils/storage';
@@ -24,7 +24,7 @@ const DEFAULT_SETTINGS: Settings = {
       min: 0,
       max: 3,
     },
-    minoMode: QUEUE_GENERATION_MODE.SEVEN_BAG_PURE,
+    minoMode: QUEUE_GEN_MODE.SEVEN_BAG_PURE,
   },
   aiSettings: {
     searchTime: 1.0,

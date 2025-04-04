@@ -5,7 +5,7 @@ import {
   BOARD_WIDTH,
   BOARD_HEIGHT,
   DRAW_MODE,
-  TetrisBoardCell,
+  TETRIS_BOARD_CELL,
 } from '../utils/tetrisDef';
 import type { XYCoordinates, TetrisBoardCellType } from '../types/tetris';
 
@@ -24,7 +24,7 @@ export const useTetrisBoard = () => {
   const currentDrawMode = computed(() => {
     if (
       (drawMode.value === DRAW_MODE.GRAY)
-      && (dragStartCellState.value === TetrisBoardCell.GRAY)
+      && (dragStartCellState.value === TETRIS_BOARD_CELL.GRAY)
     ) {
       // グレー かつ ドラッグ開始時のセルがすでにグレーだった場合はDelete処理を行う
       return DRAW_MODE.DELETE;
