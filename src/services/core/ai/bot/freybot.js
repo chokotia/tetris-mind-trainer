@@ -1226,31 +1226,21 @@ function addAbsoluteBlockPositions(move) {
     const shape = tetriminoShapes[pieceType][orientation];
     
     // 各ブロックの絶対座標を計算
-    const blockPositions = shape.map(([relX, relY]) => [centerX + relX, centerY + relY])
-        .sort(([x1, y1], [x2, y2]) => {
-            // まずx座標で比較、同じならy座標で比較
-            if (x1 !== x2) return x1 - x2;
-            return y1 - y2;
-        });
-    
-    // x座標とy座標の最小値と最大値を計算
-    const xValues = blockPositions.map(([x, _]) => x);
-    const yValues = blockPositions.map(([_, y]) => y);
-    
-    const xMin = Math.min(...xValues);
-    const xMax = Math.max(...xValues);
-    const yMin = Math.min(...yValues);
-    const yMax = Math.max(...yValues);   
-    
+    const blockPositions = shape.map(([relX, relY]) => ({
+        x: centerX + relX,
+        y: centerY + relY
+    }))
+    .sort((pos1, pos2) => {
+        // まずx座標で比較、同じならy座標で比較
+        if (pos1.x !== pos2.x) return pos1.x - pos2.x;
+        return pos1.y - pos2.y;
+    });
+       
     // 元のmoveオブジェクトに情報を追加
     const enhancedMove = {
         ...move,
         location: {
             ...move.location,
-            range: {
-                x: { from: xMin, to: xMax },
-                y: { from: yMin, to: yMax }
-            },
             blockPositions: blockPositions
         },
     };
@@ -1381,10 +1371,10 @@ onmessage = function(t) {
             return;
         }
 
-        // weights_nameが指定されている場合のみ、対応する重みを読み込む
-        if (e.weights_name && weights[e.weights_name]) {
-            aiLog(`重み設定: ${e.weights_name}`);
-            bot.loadWeights(weights[e.weights_name]);
+        // weightsNameが指定されている場合のみ、対応する重みを読み込む
+        if (e.weightsName && weights[e.weightsName]) {
+            aiLog(`重み設定: ${e.weightsName}`);
+            bot.loadWeights(weights[e.weightsName]);
         }
 
         let t = {
@@ -1422,10 +1412,13 @@ onmessage = function(t) {
         }
         postMessage({
             type: "suggestion",
-            moves: moves,
-            move_info: {
-                rollouts: bot.iters + 1
-            }
+            moves: {
+                action: moves[0].action,
+                move: moves[0].move,
+                board: moves[0].board,
+                next: moves[0].next,
+                hold: moves[0].hold,
+            },
         });
         break;
         

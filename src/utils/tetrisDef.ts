@@ -38,7 +38,7 @@ export const MINO = {
 /**
  * 盤面のセルの型
  */
-export const TetrisBoardCell = {
+export const TETRIS_BOARD_CELL = {
   I: 'I',
   O: 'O',
   T: 'T',
@@ -46,8 +46,8 @@ export const TetrisBoardCell = {
   J: 'J',
   S: 'S',
   Z: 'Z',
-  GRAY: 'GRAY',
-  WHITE: 'WHITE',
+  GRAY: 'G',
+  WHITE: 'W',
   NULL: undefined,
 } as const;
 

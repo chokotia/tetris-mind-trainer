@@ -1,4 +1,4 @@
-import { QUEUE_GENERATION_MODE, AI_WEIGHT, DRAW_MODE, MINO, TetrisBoardCell } from '../utils/tetrisDef';
+import { QUEUE_GENERATION_MODE, AI_WEIGHT, DRAW_MODE, MINO, TETRIS_BOARD_CELL } from '../utils/tetrisDef';
 
 // セルの座標
 export type XYCoordinates = {
@@ -10,7 +10,13 @@ export type XYCoordinates = {
 export type MinoType = typeof MINO[keyof typeof MINO];
 
 // 盤面のセルの型
-export type TetrisBoardCellType = typeof TetrisBoardCell[keyof typeof TetrisBoardCell];
+export type TetrisBoardCellType = typeof TETRIS_BOARD_CELL[keyof typeof TETRIS_BOARD_CELL];
+
+// 盤面の定義（20行10列の配列）
+export type BoardType = TetrisBoardCellType[][];
+
+// ミノのキュー
+export type QueueType = MinoType[];
 
 // 編集モード
 export type DrawModeType = typeof DRAW_MODE[keyof typeof DRAW_MODE];
