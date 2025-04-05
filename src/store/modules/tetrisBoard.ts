@@ -1,5 +1,9 @@
 import { TEST_TETRIS_BOARD, MINO } from '../../utils/tetrisDef';
 import type { TetrisBoardCellType, MinoType } from '../../types/tetris';
+import storage from '../../utils/storage';
+
+// 定数の分離
+const STORAGE_KEY = 'tetrisBoardState';
 
 export interface TetrisBoardState {
   tetrisBoard: TetrisBoardCellType[][];
@@ -34,5 +38,33 @@ export default {
   },
 
   actions: {
+    // ローカルストレージに保存するアクション
+    saveState({ state }: { state: TetrisBoardState }): void {
+      try {
+        storage.save(STORAGE_KEY, state);
+      } catch (error) {
+        console.error('テトリスボードの状態保存に失敗しました', error);
+        throw error;
+      }
+    },
+
+    // ローカルストレージから読み込むアクション
+    loadState({ commit }: {
+      commit: (type: string, payload: unknown) => void
+    }): TetrisBoardState | null {
+      try {
+        const boardState = storage.load<TetrisBoardState>(STORAGE_KEY);
+        if (boardState) {
+          if (boardState.tetrisBoard) commit('SET_TETRIS_BOARD', boardState.tetrisBoard);
+          if (boardState.holdMino) commit('SET_HOLD_MINO', boardState.holdMino);
+          if (boardState.nextMino) commit('SET_NEXT_MINO', boardState.nextMino);
+          return boardState;
+        }
+        return null;
+      } catch (error) {
+        console.error('テトリスボードの状態読み込みに失敗しました', error);
+        throw error;
+      }
+    },
   },
 };

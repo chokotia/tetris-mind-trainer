@@ -5,12 +5,6 @@ import storage from '../../utils/storage';
 
 // 定数の分離
 const STORAGE_KEY = 'tetrisSettings';
-const ERROR_MESSAGES = {
-  SAVE_FAILED: 'settings.error.saveFailed',
-  LOAD_FAILED: 'settings.error.loadFailed',
-} as const;
-
-type ErrorMessageKey = keyof typeof ERROR_MESSAGES;
 
 // デフォルト設定の分離
 const DEFAULT_SETTINGS: Settings = {
@@ -23,20 +17,6 @@ const DEFAULT_SETTINGS: Settings = {
     weightsName: AI_WEIGHT.CC_STANDARD_LIKE,
   },
 };
-
-// カスタムエラークラス
-class SettingsError extends Error {
-  cause?: unknown;
-
-  constructor(message: ErrorMessageKey, cause?: unknown) {
-    super(ERROR_MESSAGES[message]);
-    this.name = 'SettingsError';
-    if (cause) {
-      this.cause = cause;
-    }
-    console.error(ERROR_MESSAGES[message]);
-  }
-}
 
 export interface State {
   settings: Settings;
@@ -66,10 +46,8 @@ export default {
         storage.save(STORAGE_KEY, newSettings);
         commit('SET_SETTINGS', newSettings);
       } catch (error) {
-        if (error instanceof SettingsError) {
-          throw error;
-        }
-        throw new SettingsError('SAVE_FAILED', error);
+        console.error('設定の保存に失敗しました', error);
+        throw error;
       }
     },
 
@@ -82,10 +60,8 @@ export default {
         }
         return null;
       } catch (error) {
-        if (error instanceof SettingsError) {
-          throw error;
-        }
-        throw new SettingsError('LOAD_FAILED', error);
+        console.error('設定の読み込みに失敗しました', error);
+        throw error;
       }
     },
   },

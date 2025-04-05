@@ -1,4 +1,8 @@
 import { AIResultType } from '@/types/aiTypes';
+import storage from '../../utils/storage';
+
+// 定数の分離
+const STORAGE_KEY = 'tetrisAiResults';
 
 export interface AIResultsState {
   moves: AIResultType[];
@@ -90,6 +94,32 @@ export default {
     moveToIndex({ commit }: Context, index: number): boolean {
       commit('setMoveIndex', index);
       return true;
+    },
+
+    // ローカルストレージに保存するアクション
+    saveResults({ state }: Context): void {
+      try {
+        storage.save(STORAGE_KEY, state);
+      } catch (error) {
+        console.error('AI結果の保存に失敗しました', error);
+        throw error;
+      }
+    },
+
+    // ローカルストレージから読み込むアクション
+    loadResults({ commit }: Context): AIResultsState | null {
+      try {
+        const results = storage.load<AIResultsState>(STORAGE_KEY);
+        if (results) {
+          if (results.moves) commit('setMoves', results.moves);
+          if (results.moveIndex !== undefined) commit('setMoveIndex', results.moveIndex);
+          return results;
+        }
+        return null;
+      } catch (error) {
+        console.error('AI結果の読み込みに失敗しました', error);
+        throw error;
+      }
     },
   },
 };
