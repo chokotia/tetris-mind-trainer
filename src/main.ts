@@ -12,8 +12,8 @@ import '@/assets/styles/mino-colors.scss';
 const app = createApp(App);
 app.use(store);
 
-// 自動保存機能の初期化（5分 = 300000ミリ秒ごとに保存）
-const autoSave = new AutoSave(store, 300000);
+// 自動保存機能の初期化（30秒 = 30000ミリ秒ごとに保存）
+const autoSave = new AutoSave(store, 30000);
 
 // アプリ起動時にローカルストレージからデータを読み込む
 autoSave.loadInitialData();

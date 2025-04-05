@@ -15,8 +15,8 @@ export default {
   namespaced: true,
   state: {
     tetrisBoard: TEST_TETRIS_BOARD.map((row) => [...row]),
-    holdMino: MINO.I,
-    nextMino: Array(100).fill(MINO.I),
+    holdMino: null,
+    nextMino: ['I', 'S', 'Z', 'L', 'J', 'T', 'O', 'I', 'S', 'Z', 'L', 'J', 'T', 'O'],
   },
 
   mutations: {
