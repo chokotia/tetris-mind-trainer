@@ -1,13 +1,7 @@
 import { Store } from 'vuex';
-import type { MinoType } from '../types/tetris';
-import { MINO, TEST_TETRIS_BOARD } from '../utils/tetrisDef';
+import { TEST_TETRIS_BOARD } from '../utils/tetrisDef';
 import type { RootState } from '../store';
-
-// ランダムなミノを生成する関数
-const generateRandomMino = (): MinoType => {
-  const minos = Object.values(MINO);
-  return minos[Math.floor(Math.random() * minos.length)];
-};
+import { generateQueue } from '../utils/queueGenerator';
 
 // 問題生成サービス
 const problemGenerator = {
@@ -18,7 +12,8 @@ const problemGenerator = {
     // ホールドを空に
     store.commit('tetrisBoard/SET_HOLD_MINO', null);
     // 100個のランダムなミノを生成
-    const nextMinos = Array(100).fill(null).map(() => generateRandomMino());
+    const { nextQueueMode } = store.getters['settings/settings'].gameSettings;
+    const nextMinos = generateQueue(nextQueueMode, 100);
     store.commit('tetrisBoard/SET_NEXT_MINO', nextMinos);
   },
 };
