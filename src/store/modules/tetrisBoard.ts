@@ -1,4 +1,4 @@
-import { TEST_TETRIS_BOARD, MINO } from '../../utils/tetrisDef';
+import { EMPTY_TETRIS_BOARD } from '../../utils/tetrisDef';
 import type { TetrisBoardCellType, MinoType } from '../../types/tetris';
 import storage from '../../utils/storage';
 
@@ -14,7 +14,7 @@ export interface TetrisBoardState {
 export default {
   namespaced: true,
   state: {
-    tetrisBoard: TEST_TETRIS_BOARD.map((row) => [...row]),
+    tetrisBoard: EMPTY_TETRIS_BOARD.map((row) => [...row]),
     holdMino: null,
     nextMino: ['I', 'S', 'Z', 'L', 'J', 'T', 'O', 'I', 'S', 'Z', 'L', 'J', 'T', 'O'],
   },
