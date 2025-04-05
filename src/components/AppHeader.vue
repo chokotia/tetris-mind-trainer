@@ -5,6 +5,17 @@
         <AppModeToggle class="ms-2" />
         <div class="d-flex align-items-center">
           <button
+            id="new-problem-button"
+            class="btn btn-outline-light me-2"
+            type="button"
+            aria-label="新しい問題を生成する"
+            :disabled="isAiMode"
+            :class="{ 'opacity-50': isAiMode }"
+            @click="problemGenerator.generateNewProblem(store)"
+          >
+            <i class="bi bi-file-earmark-plus me-1"></i>
+          </button>
+          <button
             id="ask-ai-button"
             class="btn btn-outline-light me-2"
             type="button"
@@ -42,9 +53,11 @@ import { useStore } from 'vuex';
 import SettingsModal from '@/components/SettingsModal.vue';
 import AiModal from '@/components/AiModal.vue';
 import AppModeToggle from '@/components/AppModeToggle.vue';
+import problemGenerator from '@/services/problemGenerator';
 
 const store = useStore();
 const isEditMode = computed(() => store.getters['appMode/isEditMode']);
+const isAiMode = computed(() => store.getters['appMode/isAiMode']);
 
 const settingsModalRef = ref<InstanceType<typeof SettingsModal> | null>(null);
 const aiModalRef = ref<InstanceType<typeof AiModal> | null>(null);
