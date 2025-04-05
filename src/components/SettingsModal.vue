@@ -7,6 +7,25 @@
     @cancel="handleCancel"
   >
     <form class="modal-body">
+      <h3 class="fs-6 mb-3">ゲーム設定：</h3>
+      <div class="mb-3">
+        <label class="form-label" for="next-queue-mode">
+          ミノ順:
+          <select
+            id="next-queue-mode"
+            class="form-select"
+            :value="tempSettings.gameSettings.nextQueueMode"
+            @change="changeTempSettings('gameSettings.nextQueueMode', $event)"
+          >
+            <option :value="QUEUE_GEN_MODE.RANDOM">完全ランダム</option>
+            <option :value="QUEUE_GEN_MODE.SEVEN_BAG_PURE">7種一巡</option>
+            <option :value="QUEUE_GEN_MODE.SEVEN_BAG_RANDOM">7種一巡（ランダムスタート）</option>
+          </select>
+        </label>
+      </div>
+    </form>
+
+    <form class="modal-body">
       <h3 class="fs-6 mb-3">AI：</h3>
       <div class="mb-3">
         <label class="form-label" for="ai-weights-name">
@@ -54,7 +73,7 @@
               class="form-range flex-grow-1"
               min="5"
               max="60"
-              step="5"
+              step="20"
               :value="tempSettings.aiSettings.movesCount"
               @input="changeTempSettings('aiSettings.movesCount', $event)"
             />
@@ -73,6 +92,7 @@ import { computed, defineExpose, ref } from 'vue';
 import { useStore } from 'vuex';
 import { BModal } from 'bootstrap-vue-next';
 import type { Settings } from '@/types/settings';
+import { QUEUE_GEN_MODE } from '@/utils/tetrisDef';
 
 const store = useStore();
 const settings = computed(() => store.state.settings.settings as Settings);
@@ -105,7 +125,7 @@ const handleCancel = () => {
 
 const changeTempSettings = (path: string, event: Event) => {
   const target = event.target as HTMLInputElement;
-  const value = Number(target.value);
+  const value = target.type === 'range' ? Number(target.value) : target.value;
 
   // パスを配列に分割
   const pathArray = path.split('.');
