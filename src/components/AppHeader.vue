@@ -2,24 +2,7 @@
   <header class="app-header navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <div class="d-flex align-items-center justify-content-between w-100">
-        <div class="d-flex align-items-center">
-          <button
-            id="new-problem-button"
-            class="btn btn-outline-light me-2"
-            type="button"
-            aria-label="新しい問題を生成する"
-          >
-            <i class="bi bi-file-earmark-plus"></i>
-          </button>
-          <button
-            id="reset-board"
-            class="btn btn-outline-light me-2"
-            type="button"
-            aria-label="現在の問題を最初から行う"
-          >
-            <i class="bi bi-arrow-repeat"></i>
-          </button>
-        </div>
+        <AppModeToggle class="ms-2" />
         <div class="d-flex align-items-center">
           <button
             id="ask-ai-button"
@@ -55,6 +38,7 @@
 import { ref } from 'vue';
 import SettingsModal from '@/components/SettingsModal.vue';
 import AiModal from '@/components/AiModal.vue';
+import AppModeToggle from '@/components/AppModeToggle.vue';
 
 const settingsModalRef = ref<InstanceType<typeof SettingsModal> | null>(null);
 const aiModalRef = ref<InstanceType<typeof AiModal> | null>(null);

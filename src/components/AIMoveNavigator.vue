@@ -1,13 +1,23 @@
 <template>
   <div class="ai-move-navigator">
-    <button
-      class="btn btn-sm btn-outline-light"
-      :disabled="!hasPrevious"
-      @click="goToPrevious"
-      aria-label="AIの手を一手戻す"
-    >
-      <i class="bi bi-chevron-left"></i>
-    </button>
+    <div class="d-flex align-items-center">
+      <button
+        v-if="currentMove && moveIndex > 0"
+        class="btn btn-sm btn-outline-light me-2"
+        @click="goToFirst"
+        aria-label="最初の手に戻る"
+      >
+        <i class="bi bi-skip-backward"></i>
+      </button>
+      <button
+        class="btn btn-sm btn-outline-light"
+        :disabled="!hasPrevious"
+        @click="goToPrevious"
+        aria-label="AIの手を一手戻す"
+      >
+        <i class="bi bi-chevron-left"></i>
+      </button>
+    </div>
     <div v-if="currentMove" class="current-move">
       <div class="move-content" v-if="moveIndex === 0">
         <span class="move-indicator">0手目: 初期状態</span>
@@ -46,7 +56,9 @@ import getPositionRangeDisplay from '@/utils/AiMoveUtils';
 import useAiMoveApply from '@/composables/useAiMoveApply';
 
 const store = useStore();
-const { applyMoveByIndex, moveToPrevious, moveToNext } = useAiMoveApply();
+const {
+  applyMoveByIndex, moveToPrevious, moveToNext, moveToFirst,
+} = useAiMoveApply();
 
 const currentMove = computed(() => store.getters['aiResults/getCurrentMove']);
 const moveIndex = computed(() => store.getters['aiResults/getMoveIndex']);
@@ -63,6 +75,11 @@ const getMoveIndicator = computed(() => {
 
   return `${moveNumber}手目: ${location.orientation}, ${positionDisplay}`;
 });
+
+// 最初の手に移動する
+const goToFirst = async () => {
+  await moveToFirst();
+};
 
 // 前の手に移動する
 const goToPrevious = async () => {

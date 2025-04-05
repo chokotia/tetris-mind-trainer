@@ -87,10 +87,30 @@ export default function useAiMoveApply() {
     return false;
   };
 
+  /**
+   * 最初の手（0手目）に移動して適用する
+   *
+   * @returns 適用に成功したかを解決するPromise
+   */
+  const moveToFirst = async (): Promise<boolean> => {
+    // 最初の手のインデックスは0
+    const success = await store.dispatch('aiResults/moveToIndex', 0);
+    if (success) {
+      // 盤面状態を更新
+      const move = store.getters['aiResults/getCurrentMove'];
+      if (move) {
+        applyMove(move);
+        return true;
+      }
+    }
+    return false;
+  };
+
   return {
     applyMoveByIndex,
     applyMove,
     moveToPrevious,
     moveToNext,
+    moveToFirst,
   };
 }

@@ -3,6 +3,7 @@ import settings, { State as SettingsState } from './modules/settings';
 import tetrisBoard, { TetrisBoardState } from './modules/tetrisBoard';
 import drawMode, { DrawModeState } from './modules/drawMode';
 import aiResults, { AIResultsState } from './modules/aiResults';
+import appMode, { AppModeState } from './modules/appMode';
 
 // ルートストアの型定義
 export interface RootState {
@@ -10,6 +11,7 @@ export interface RootState {
   tetrisBoard: TetrisBoardState;
   drawMode: DrawModeState;
   aiResults: AIResultsState;
+  appMode: AppModeState;
 }
 
 export default createStore<RootState>({
@@ -18,5 +20,6 @@ export default createStore<RootState>({
     tetrisBoard,
     drawMode,
     aiResults,
+    appMode,
   },
 });

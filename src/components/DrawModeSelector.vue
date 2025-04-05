@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between w-100 mb-2">
+  <div class="draw-mode-selector">
     <div class="btn-group">
       <button
         class="btn edit-option"
@@ -64,6 +64,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.draw-mode-selector {
+  display: flex;
+  justify-content: center;
+}
+
 .btn-group {
   .btn {
     &.edit-option {
