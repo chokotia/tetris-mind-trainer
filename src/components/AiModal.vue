@@ -14,7 +14,7 @@
       <div class="col-md-8">
         <h3 class="fs-6 mb-2">探索履歴</h3>
         <div class="list-group ai-history-container">
-          <div v-if="hasResults" class="text-center py-3 text-muted">
+          <div v-if="!hasResults" class="text-center py-3 text-muted">
             <em>まだ履歴がありません</em>
           </div>
           <div
@@ -26,10 +26,24 @@
             tabindex="0"
             @click="selectMove(index)"
           >
-            <span>{{ index === 0 ? '初期状態' : `${index}手目: ${result.action || '移動なし'}` }}</span>
-            <span v-if="index > 0" class="badge bg-primary rounded-pill">
-              {{ index }}
-            </span>
+            <div class="d-flex align-items-center">
+              <span v-if="index === 0">0手目: 初期状態</span>
+              <template v-else-if="result.move">
+                <span class="me-2">{{ index }}手目:</span>
+                <span
+                  class="move-label me-1"
+                  :class="`bg-label-${result.move.location.type}`"
+                >
+                  {{ result.move.location.type }}
+                </span>
+                <div class="d-flex flex-column">
+                  <small>
+                    {{ result.move.location.orientation }}
+                    {{ getPositionRangeDisplay(result.move.location) }}
+                  </small>
+                </div>
+              </template>
+            </div>
           </div>
         </div>
       </div>
@@ -50,7 +64,7 @@
             :disabled="!hasResults || selectedMoveIndex === null"
             @click="applyResults"
           >
-            適用
+            選択した手を適用
           </button>
           <button
             class="btn btn-outline-danger"
@@ -70,7 +84,7 @@ import {
   ref, computed, defineExpose,
 } from 'vue';
 import { BModal } from 'bootstrap-vue-next';
-import type { AIResultType } from '@/types/aiTypes';
+import type { AIResultType, PieceLocationType } from '@/types/aiTypes';
 import { useStore } from 'vuex';
 import AIControllerWrapper from '../services/AIControllerWrapper';
 
@@ -106,6 +120,23 @@ const startSearch = async (): Promise<void> => {
   isSearching.value = true;
   await aiController.value.calculateMoves();
   isSearching.value = false;
+};
+
+// 位置の範囲表示を取得（x, y座標の範囲を一度に計算）
+const getPositionRangeDisplay = (location: PieceLocationType): string => {
+  if (!location.blockPositions || location.blockPositions.length === 0) {
+    return `x:${location.x}-?, y:${location.y}-?`;
+  }
+
+  const xValues = location.blockPositions.map((pos) => location.x + pos.x);
+  const yValues = location.blockPositions.map((pos) => location.y + pos.y);
+
+  const minX = Math.min(...xValues);
+  const maxX = Math.max(...xValues);
+  const minY = Math.min(...yValues);
+  const maxY = Math.max(...yValues);
+
+  return `x:${minX}-${maxX}, y:${minY}-${maxY}`;
 };
 
 // 結果を適用
@@ -159,5 +190,49 @@ defineExpose({
       color: #0d6efd !important;
     }
   }
+}
+
+.move-label {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 12px;
+}
+
+.bg-label-I {
+  background-color: var(--color-piece-i);
+  color: #000;
+}
+
+.bg-label-O {
+  background-color: var(--color-piece-o);
+  color: #000;
+}
+
+.bg-label-T {
+  background-color: var(--color-piece-t);
+}
+
+.bg-label-L {
+  background-color: var(--color-piece-l);
+  color: #000;
+}
+
+.bg-label-J {
+  background-color: var(--color-piece-j);
+}
+
+.bg-label-S {
+  background-color: var(--color-piece-s);
+  color: #000;
+}
+
+.bg-label-Z {
+  background-color: var(--color-piece-z);
 }
 </style>
