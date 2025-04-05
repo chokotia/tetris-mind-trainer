@@ -48,7 +48,7 @@ export const TETRIS_BOARD_CELL = {
   Z: 'Z',
   GRAY: 'G',
   WHITE: 'W',
-  NULL: undefined,
+  NULL: null,
 } as const;
 
 /**
@@ -111,25 +111,25 @@ export const TETRIS_RULES = {
  * 空の盤面
  */
 export const EMPTY_TETRIS_BOARD = Array(BOARD_HEIGHT)
-  .fill(undefined)
-  .map(() => Array(BOARD_WIDTH).fill(undefined));
+  .fill(null)
+  .map(() => Array(BOARD_WIDTH).fill(null));
 
 /**
  * テスト用の盤面
  */
 export const TEST_TETRIS_BOARD = Array(BOARD_HEIGHT)
-  .fill(undefined)
+  .fill(null)
   .map((_, rowIndex) => {
     if (rowIndex === 17) {
-      return ['G', 'G', 'G', 'G', 'G', 'G', 'G', undefined, undefined, undefined];
+      return ['G', 'G', 'G', 'G', 'G', 'G', 'G', null, null, null];
     }
     if (rowIndex === 18) {
-      return [undefined, 'T', 'S', 'S', undefined, undefined, undefined, undefined, undefined, undefined];
+      return [null, 'T', 'S', 'S', null, null, null, null, null, null];
     }
     if (rowIndex === 19) {
-      return ['T', 'T', 'T', 'S', 'S', 'I', 'I', 'I', 'I', undefined];
+      return ['T', 'T', 'T', 'S', 'S', 'I', 'I', 'I', 'I', null];
     }
-    return Array(BOARD_WIDTH).fill(undefined);
+    return Array(BOARD_WIDTH).fill(null);
   });
 
 // ミノの形状定義（簡略化版）
