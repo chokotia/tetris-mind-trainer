@@ -1,23 +1,6 @@
 <template>
   <div class="ai-move-navigator">
-    <div class="d-flex align-items-center">
-      <button
-        v-if="currentMove && moveIndex > 0"
-        class="btn btn-sm btn-outline-light me-2"
-        @click="goToFirst"
-        aria-label="最初の手に戻る"
-      >
-        <i class="bi bi-skip-backward"></i>
-      </button>
-      <button
-        class="btn btn-sm btn-outline-light"
-        :disabled="!hasPrevious"
-        @click="goToPrevious"
-        aria-label="AIの手を一手戻す"
-      >
-        <i class="bi bi-chevron-left"></i>
-      </button>
-    </div>
+    <!-- 1行目: 棋譜表示 -->
     <div v-if="currentMove" class="current-move">
       <div class="move-content" v-if="moveIndex === 0">
         <span class="move-indicator">0手目: 初期状態</span>
@@ -38,14 +21,42 @@
     <div v-else class="no-move">
       <span class="invisible">AI手なし</span>
     </div>
-    <button
-      class="btn btn-sm btn-outline-light"
-      :disabled="!hasNext"
-      @click="goToNext"
-      aria-label="AIの手を一手進める"
-    >
-      <i class="bi bi-chevron-right"></i>
-    </button>
+
+    <!-- 2行目: ナビゲーションボタン -->
+    <div class="navigation-buttons">
+      <button
+        class="btn-first"
+        @click="goToFirst"
+        :disabled="!moveIndex || moveIndex <= 0"
+        aria-label="最初の手に戻る"
+      >
+        <i class="bi bi-skip-backward"></i>
+      </button>
+      <button
+        class="btn-nav btn-prev"
+        :disabled="!hasPrevious"
+        @click="goToPrevious"
+        aria-label="AIの手を一手戻す"
+      >
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button
+        class="btn-nav btn-next"
+        :disabled="!hasNext"
+        @click="goToNext"
+        aria-label="AIの手を一手進める"
+      >
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <button
+        class="btn-first"
+        @click="goToLast"
+        :disabled="!hasNext"
+        aria-label="最後の手に進む"
+      >
+        <i class="bi bi-skip-forward"></i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -57,7 +68,7 @@ import useAiMoveApply from '@/composables/useAiMoveApply';
 
 const store = useStore();
 const {
-  applyMoveByIndex, moveToPrevious, moveToNext, moveToFirst,
+  applyMoveByIndex, moveToPrevious, moveToNext, moveToFirst, moveToLast,
 } = useAiMoveApply();
 
 const currentMove = computed(() => store.getters['aiResults/getCurrentMove']);
@@ -91,6 +102,11 @@ const goToNext = async () => {
   await moveToNext();
 };
 
+// 最後の手に移動する
+const goToLast = async () => {
+  await moveToLast();
+};
+
 // 初期表示時に現在の手を適用
 watch(currentMove, async (newMove) => {
   if (newMove && moveIndex.value !== null) {
@@ -102,8 +118,9 @@ watch(currentMove, async (newMove) => {
 <style scoped>
 .ai-move-navigator {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   margin: 0 auto;
   position: absolute;
   left: 50%;
@@ -113,8 +130,8 @@ watch(currentMove, async (newMove) => {
 .current-move {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   min-width: 280px;
   text-align: center;
 }
@@ -128,8 +145,8 @@ watch(currentMove, async (newMove) => {
 .no-move {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   min-width: 280px;
   text-align: center;
 }
@@ -137,6 +154,63 @@ watch(currentMove, async (newMove) => {
 .move-indicator {
   font-weight: 500;
   font-size: 0.9rem;
+}
+
+/* ナビゲーションボタンのスタイル */
+.navigation-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.btn-nav {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-nav:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-first {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-first:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-first:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ミノラベルのスタイル */

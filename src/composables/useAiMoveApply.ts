@@ -106,11 +106,35 @@ export default function useAiMoveApply() {
     return false;
   };
 
+  /**
+   * 最後の手に移動して適用する
+   *
+   * @returns 適用に成功したかを解決するPromise
+   */
+  const moveToLast = async (): Promise<boolean> => {
+    // 最後の手のインデックスを取得
+    const movesCount = store.getters['aiResults/getMovesCount'];
+    if (movesCount <= 0) return false;
+
+    const lastIndex = movesCount - 1;
+    const success = await store.dispatch('aiResults/moveToIndex', lastIndex);
+    if (success) {
+      // 盤面状態を更新
+      const move = store.getters['aiResults/getCurrentMove'];
+      if (move) {
+        applyMove(move);
+        return true;
+      }
+    }
+    return false;
+  };
+
   return {
     applyMoveByIndex,
     applyMove,
     moveToPrevious,
     moveToNext,
     moveToFirst,
+    moveToLast,
   };
 }
