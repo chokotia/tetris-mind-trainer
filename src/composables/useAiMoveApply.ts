@@ -13,12 +13,13 @@ export default function useAiMoveApply() {
    * 指定されたインデックスの手を盤面に適用する
    *
    * @param moveIndex 適用する手のインデックス
-   * @returns 適用に成功したかどうか
+   * @returns 適用に成功したかどうかを解決するPromise
    */
-  const applyMoveByIndex = (moveIndex: number): boolean => {
+  const applyMoveByIndex = async (moveIndex: number): Promise<boolean> => {
     if (moveIndex === undefined) return false;
 
-    store.commit('aiResults/setMoveIndex', moveIndex);
+    // インデックスを設定し、手を適用する
+    await store.dispatch('aiResults/moveToIndex', moveIndex);
 
     // 盤面状態を更新
     const move: AIResultType | undefined = JSON.parse(
@@ -50,8 +51,46 @@ export default function useAiMoveApply() {
     return true;
   };
 
+  /**
+   * 前の手に移動して適用する
+   *
+   * @returns 適用に成功したかを解決するPromise
+   */
+  const moveToPrevious = async (): Promise<boolean> => {
+    const success = await store.dispatch('aiResults/moveToPrevious');
+    if (success) {
+      // 盤面状態を更新
+      const move = store.getters['aiResults/getCurrentMove'];
+      if (move) {
+        applyMove(move);
+        return true;
+      }
+    }
+    return false;
+  };
+
+  /**
+   * 次の手に移動して適用する
+   *
+   * @returns 適用に成功したかを解決するPromise
+   */
+  const moveToNext = async (): Promise<boolean> => {
+    const success = await store.dispatch('aiResults/moveToNext');
+    if (success) {
+      // 盤面状態を更新
+      const move = store.getters['aiResults/getCurrentMove'];
+      if (move) {
+        applyMove(move);
+        return true;
+      }
+    }
+    return false;
+  };
+
   return {
     applyMoveByIndex,
     applyMove,
+    moveToPrevious,
+    moveToNext,
   };
 }
