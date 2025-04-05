@@ -1,8 +1,6 @@
 <template>
   <div class="mode-toggle-container">
-    <div class="mode-toggle-label" :class="{ 'active': !isAiMode }">
-      <span>Edit</span>
-    </div>
+    <div class="mode-toggle-label" :class="{ 'active': !isAiMode }"></div>
     <div
       class="mode-toggle"
       @click="toggleMode"
@@ -21,9 +19,7 @@
       </div>
       <div class="toggle-slider" :class="{ 'ai-active': isAiMode }"></div>
     </div>
-    <div class="mode-toggle-label" :class="{ 'active': isAiMode }">
-      <span>AI</span>
-    </div>
+    <div class="mode-toggle-label" :class="{ 'active': isAiMode }"></div>
   </div>
 </template>
 

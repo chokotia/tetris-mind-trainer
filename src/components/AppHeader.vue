@@ -10,6 +10,8 @@
             type="button"
             aria-label="AIに最適な手を求める"
             @click="openAiModal"
+            :disabled="isEditMode"
+            :class="{ 'opacity-50': isEditMode }"
           >
             <i class="bi bi-robot"></i>
           </button>
@@ -35,10 +37,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 import SettingsModal from '@/components/SettingsModal.vue';
 import AiModal from '@/components/AiModal.vue';
 import AppModeToggle from '@/components/AppModeToggle.vue';
+
+const store = useStore();
+const isEditMode = computed(() => store.getters['appMode/isEditMode']);
 
 const settingsModalRef = ref<InstanceType<typeof SettingsModal> | null>(null);
 const aiModalRef = ref<InstanceType<typeof AiModal> | null>(null);
