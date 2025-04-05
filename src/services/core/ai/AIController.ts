@@ -1,10 +1,10 @@
 import {
-  AIStatus,
-  GameState,
-  Move,
-  MoveResult,
-  SuggestionMessage,
-  WorkerMessage,
+  AIStatusType,
+  GameStateType,
+  MoveType,
+  AIResultType,
+  SuggestionMessageType,
+  WorkerMessageType,
 } from '@/types/aiTypes';
 
 import { AI_STATUS } from '@/utils/aiDef';
@@ -18,7 +18,7 @@ import EventEmitter from './EventEmitter';
 export default class AIController extends EventEmitter {
   private worker: Worker | null;
 
-  private status: AIStatus;
+  private status: AIStatusType;
 
   private message: string;
 
@@ -32,7 +32,7 @@ export default class AIController extends EventEmitter {
   /**
    * ステータスを設定
    */
-  private setStatus(status: AIStatus, message = ''): void {
+  private setStatus(status: AIStatusType, message = ''): void {
     this.status = status;
     this.message = message;
   }
@@ -40,7 +40,7 @@ export default class AIController extends EventEmitter {
   /**
    * ステータスを取得
    */
-  getStatus(): AIStatus {
+  getStatus(): AIStatusType {
     return this.status;
   }
 
@@ -74,13 +74,13 @@ export default class AIController extends EventEmitter {
       //   非同期処理を同期的に見せる（await）ことができ、
       //   requestSuggestion()などのメソッドで戻り値として結果を受け取れるようになるメリットがあるため採用している。
       this.worker.onmessage = (e: MessageEvent) => {
-        const message = e.data as WorkerMessage;
+        const message = e.data as WorkerMessageType;
         switch (message.type) {
           case 'ready':
             this.emit('ready', undefined);
             break;
           case 'suggestion':
-            this.emit('suggestion', message as SuggestionMessage);
+            this.emit('suggestion', message as SuggestionMessageType);
             break;
           case 'info':
             console.log('[AIController] info:', message);
@@ -114,7 +114,7 @@ export default class AIController extends EventEmitter {
   /**
    * AIに開始メッセージを送信
    */
-  private start(initialGameState: GameState): void {
+  private start(initialGameState: GameStateType): void {
     if (!this.worker) {
       return;
     }
@@ -132,18 +132,18 @@ export default class AIController extends EventEmitter {
   /**
    * AIに最適な手を要求
    */
-  private async requestSuggestion(): Promise<SuggestionMessage> {
+  private async requestSuggestion(): Promise<SuggestionMessageType> {
     if (!this.worker) {
       throw new Error('Workerが初期化されていません');
     }
 
     // AIにsuggestを送信し、suggestionが返ってくるのを待つ
     this.worker.postMessage({ type: 'suggest' });
-    return new Promise<SuggestionMessage>((resolve) => {
+    return new Promise<SuggestionMessageType>((resolve) => {
       const handler = (data: unknown) => {
         this.off('suggestion', handler);
         // 型安全のためのキャスト
-        resolve(data as SuggestionMessage);
+        resolve(data as SuggestionMessageType);
       };
       this.on('suggestion', handler);
     });
@@ -152,7 +152,7 @@ export default class AIController extends EventEmitter {
   /**
    * AIの提案した手を適用
    */
-  private applyMove(move: Move | null): void {
+  private applyMove(move: MoveType | null): void {
     if (!move || !this.worker) {
       return;
     }
@@ -182,12 +182,12 @@ export default class AIController extends EventEmitter {
    * @returns - 各手の結果
    */
   async calculateMoves(
-    initialGameState: GameState,
+    initialGameState: GameStateType,
     moves: number,
     delayMs = 1000,
-  ): Promise<MoveResult[]> {
+  ): Promise<AIResultType[]> {
     // クラスを初期化
-    this.initialize();
+    await this.initialize();
 
     // 探索を開始する条件（盤面やネクスト、ホールド等）をAIに渡す
     this.start(initialGameState);
@@ -201,7 +201,7 @@ export default class AIController extends EventEmitter {
       hold: initialGameState.hold,
     }));
 
-    const results: MoveResult[] = [];
+    const results: AIResultType[] = [];
     results.push(firstMove);
 
     // 各手の計算を行う
@@ -216,11 +216,13 @@ export default class AIController extends EventEmitter {
       // eslint-disable-next-line no-await-in-loop
       const suggestion = await this.requestSuggestion();
       console.log('[AIController] suggestion:', suggestion);
-      if (suggestion && suggestion.moves) {
-        results.push(suggestion.moves);
-        this.applyMove(suggestion.moves.move);
+      if (suggestion && suggestion.bestMove) {
+        results.push(suggestion.bestMove);
+        this.applyMove(suggestion.bestMove.move);
       }
     }
+
+    this.setStatus(AI_STATUS.RUNNING_FINISHED, `${moves}手先まで計算完了`);
 
     // workerを停止
     this.stopWorker();

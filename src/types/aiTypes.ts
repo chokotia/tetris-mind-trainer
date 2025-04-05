@@ -4,16 +4,16 @@ import {
 } from './tetris';
 
 // AIの状態
-export type AIStatus = typeof AI_STATUS[keyof typeof AI_STATUS];
+export type AIStatusType = typeof AI_STATUS[keyof typeof AI_STATUS];
 
 // ミノの向き
-export type Orientation = typeof ORIENTATION[keyof typeof ORIENTATION];
+export type OrientationType = typeof ORIENTATION[keyof typeof ORIENTATION];
 
 // ミノの回転
-export type Spin = typeof SPIN[keyof typeof SPIN];
+export type SpinType = typeof SPIN[keyof typeof SPIN];
 
 // ゲーム状態の定義
-export type GameState = {
+export type GameStateType = {
   weightsName: string;
   board: BoardType;
   queue: QueueType;
@@ -23,37 +23,37 @@ export type GameState = {
 }
 
 // ミノの位置情報
-export type PieceLocation = {
+export type PieceLocationType = {
   type: MinoType;
-  orientation: Orientation;
+  orientation: OrientationType;
   x: number;
   y: number;
   blockPositions: XYCoordinates[];
 }
 
 // ミノの配置（位置と回転）
-export type Move = {
-  location: PieceLocation;
-  spin: Spin;
+export type MoveType = {
+  location: PieceLocationType;
+  spin: SpinType;
 }
 
 // 計算結果の各手の情報
-export type MoveResult = {
+export type AIResultType = {
   action: string;
-  move: Move | null;
+  move: MoveType | null;
   board: BoardType;
   next: QueueType;
   hold: MinoType | null;
 }
 
 // Worker用のメッセージ型
-export type WorkerMessage = {
+export type WorkerMessageType = {
   type: string;
   [key: string]: unknown;
 }
 
 // AIからの提案メッセージ
-export type SuggestionMessage = WorkerMessage & {
+export type SuggestionMessageType = WorkerMessageType & {
   type: 'suggestion';
-  moves: MoveResult;
+  bestMove: AIResultType;
 }

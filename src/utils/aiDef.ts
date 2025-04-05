@@ -1,9 +1,10 @@
 // AIの状態
 export const AI_STATUS = {
-  UNINITIALIZED: '未初期化',
+  UNINITIALIZED: '待機状態',
   INITIALIZING: '初期化中',
   READY: '準備完了',
-  RUNNING: '実行中',
+  RUNNING: '探索中...',
+  RUNNING_FINISHED: '探索完了',
   STOPPED: '停止中',
   ERROR: 'エラー',
 } as const;

@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { GameState, MoveResult } from '@/types/aiTypes';
+import type { GameStateType, AIResultType } from '@/types/aiTypes';
 import AIController from '../services/core/ai/AIController';
 
 const aiController = ref<AIController>(new AIController());
@@ -25,7 +25,7 @@ const isCalculating = ref<boolean>(false);
 const status = computed<string>(() => aiController.value.getStatus());
 const message = computed<string>(() => aiController.value.getStatusMessage());
 
-const createInitialGameState = (): GameState => ({
+const createInitialGameState = (): GameStateType => ({
   weightsName: 'default',
   board: Array(20).fill(null).map(() => Array(10).fill(null)),
   queue: ['I', 'O', 'T', 'L', 'J', 'S', 'Z'],
@@ -40,7 +40,7 @@ const calculateMoves = async (): Promise<void> => {
   isCalculating.value = true;
   try {
     const initialGameState = createInitialGameState();
-    const results: MoveResult[] = await aiController.value.calculateMoves(
+    const results: AIResultType[] = await aiController.value.calculateMoves(
       initialGameState,
       3,
       1000,

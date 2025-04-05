@@ -27,7 +27,7 @@ const DEFAULT_SETTINGS: Settings = {
     minoMode: QUEUE_GEN_MODE.SEVEN_BAG_PURE,
   },
   aiSettings: {
-    searchTime: 1.0,
+    searchTime: 1000,
     movesCount: 5,
     weightsName: AI_WEIGHT.CC_STANDARD_LIKE,
   },
@@ -51,12 +51,7 @@ export interface State {
   settings: Settings;
 }
 
-// RootStateの型を直接定義
-interface RootState {
-  settings: State;
-}
-
-type SettingsContext = ActionContext<State, RootState>;
+type SettingsContext = ActionContext<State, unknown>;
 
 export default {
   namespaced: true,

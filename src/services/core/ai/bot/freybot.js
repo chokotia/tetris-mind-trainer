@@ -1412,7 +1412,7 @@ onmessage = function(t) {
         }
         postMessage({
             type: "suggestion",
-            moves: {
+            bestMove: {
                 action: moves[0].action,
                 move: moves[0].move,
                 board: moves[0].board,
