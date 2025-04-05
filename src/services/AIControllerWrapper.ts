@@ -42,7 +42,7 @@ export default class AIControllerWrapper {
     const result: AIResultType[] = await this.aiController.calculateMoves(
       initialGameState,
       movesCount,
-      searchTime,
+      searchTime * 1000, // 秒をミリ秒に変換
     );
 
     // 計算結果をvuexに保存

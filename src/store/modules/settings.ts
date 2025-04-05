@@ -27,7 +27,7 @@ const DEFAULT_SETTINGS: Settings = {
     minoMode: QUEUE_GEN_MODE.SEVEN_BAG_PURE,
   },
   aiSettings: {
-    searchTime: 1000,
+    searchTime: 1,
     movesCount: 5,
     weightsName: AI_WEIGHT.CC_STANDARD_LIKE,
   },
