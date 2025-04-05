@@ -1,0 +1,44 @@
+// ミノの色関連のスタイル定義
+.move-label {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 12px;
+}
+
+.bg-label-I {
+  background-color: var(--color-piece-i);
+  color: #000;
+}
+
+.bg-label-O {
+  background-color: var(--color-piece-o);
+  color: #000;
+}
+
+.bg-label-T {
+  background-color: var(--color-piece-t);
+}
+
+.bg-label-L {
+  background-color: var(--color-piece-l);
+  color: #000;
+}
+
+.bg-label-J {
+  background-color: var(--color-piece-j);
+}
+
+.bg-label-S {
+  background-color: var(--color-piece-s);
+  color: #000;
+}
+
+.bg-label-Z {
+  background-color: var(--color-piece-z);
+} 
