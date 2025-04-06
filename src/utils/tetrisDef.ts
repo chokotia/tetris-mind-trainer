@@ -63,16 +63,6 @@ export const AI_WEIGHT = {
 } as const;
 
 /**
- * AIの制約値定義
- */
-export const AI_CONSTRAINTS = {
-  MIN_SEARCH_TIME: 0.5,
-  MAX_SEARCH_TIME: 10,
-  MIN_MOVES_COUNT: 1,
-  MAX_MOVES_COUNT: 20,
-} as const;
-
-/**
  * 空の盤面
  */
 export const EMPTY_TETRIS_BOARD = Array(BOARD_HEIGHT)

@@ -12,8 +12,8 @@ const DEFAULT_SETTINGS: Settings = {
     nextQueueMode: QUEUE_GEN_MODE.SEVEN_BAG_PURE,
   },
   aiSettings: {
-    searchTime: 1,
-    movesCount: 5,
+    searchTime: 0.5,
+    movesCount: 20,
     weightsName: AI_WEIGHT.CC_STANDARD_LIKE,
   },
 };
