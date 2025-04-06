@@ -25,6 +25,7 @@ import TetrisNext from './TetrisNext.vue';
   flex: 1;
   height: 100%;
   overflow: auto;
+  touch-action: none;
 }
 
 .game-container {

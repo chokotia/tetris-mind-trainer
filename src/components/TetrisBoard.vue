@@ -66,7 +66,6 @@ const getCellStyle = (cellValue: TetrisBoardCellType) => {
   background-color: #333;
   padding: 1px;
   border: 1px solid #666;
-  touch-action: none; /* タッチ操作時のデフォルト動作を無効化 */
 }
 
 .tetris-board-row {
