@@ -33,7 +33,7 @@ export const useTetrisBoard = () => {
   });
 
   // ユーティリティ関数
-  const getCellCoordinates = (event: MouseEvent): XYCoordinates => {
+  const getCellCoordinatesFromMouse = (event: MouseEvent): XYCoordinates => {
     const boardElement = event.currentTarget as HTMLElement;
     const rect = boardElement.getBoundingClientRect();
     const cellWidth = rect.width / BOARD_WIDTH;
@@ -45,38 +45,81 @@ export const useTetrisBoard = () => {
     return { x, y };
   };
 
+  const getCellCoordinatesFromTouch = (touch: Touch, element: HTMLElement): XYCoordinates => {
+    const rect = element.getBoundingClientRect();
+    const cellWidth = rect.width / BOARD_WIDTH;
+    const cellHeight = rect.height / BOARD_HEIGHT;
+
+    const x = Math.floor((touch.clientX - rect.left) / cellWidth);
+    const y = Math.floor((touch.clientY - rect.top) / cellHeight);
+
+    return { x, y };
+  };
+
   const isValidCell = (x: number, y: number): boolean => (
     x >= 0 && x < BOARD_WIDTH && y >= 0 && y < BOARD_HEIGHT
   );
 
   // マウスイベントハンドラー
   const onMouseDown = (event: MouseEvent): void => {
-    const { x, y } = getCellCoordinates(event);
+    const { x, y } = getCellCoordinatesFromMouse(event);
     isStartedInsideBoard.value = isValidCell(x, y);
     isDragging.value = true;
-    dragStartCellState.value = tetrisBoard.value[y][x];
-
-    // ドラッグ開始時のセルが盤面外の場合は何もしない
-    if (!isStartedInsideBoard.value) {
-      return;
+    if (isStartedInsideBoard.value) {
+      dragStartCellState.value = tetrisBoard.value[y][x];
+      drawCell({ x, y }, currentDrawMode.value, store);
     }
-
-    drawCell({ x, y }, currentDrawMode.value, store);
   };
 
   const onMouseMove = (event: MouseEvent): void => {
     if (!isDragging.value || !isStartedInsideBoard.value) return;
-    const { x, y } = getCellCoordinates(event);
+    const { x, y } = getCellCoordinatesFromMouse(event);
 
-    // ドラッグ開始時のセルが盤面外 or 現在の座標がセル外の場合は何もしない
-    if (!isValidCell(x, y) || !isStartedInsideBoard.value) {
-      return;
+    if (isValidCell(x, y)) {
+      drawCell({ x, y }, currentDrawMode.value, store);
     }
-
-    drawCell({ x, y }, currentDrawMode.value, store);
   };
 
   const onMouseUp = (): void => {
+    isDragging.value = false;
+    isStartedInsideBoard.value = false;
+    dragStartCellState.value = null;
+  };
+
+  // タッチイベントハンドラー
+  const onTouchStart = (event: TouchEvent): void => {
+    event.preventDefault(); // デフォルトのスクロール動作を防止
+    if (event.touches.length > 0) {
+      const touch = event.touches[0];
+      const boardElement = event.currentTarget as HTMLElement;
+      const { x, y } = getCellCoordinatesFromTouch(touch, boardElement);
+
+      isStartedInsideBoard.value = isValidCell(x, y);
+      isDragging.value = true;
+
+      if (isStartedInsideBoard.value) {
+        dragStartCellState.value = tetrisBoard.value[y][x];
+        drawCell({ x, y }, currentDrawMode.value, store);
+      }
+    }
+  };
+
+  const onTouchMove = (event: TouchEvent): void => {
+    event.preventDefault(); // デフォルトのスクロール動作を防止
+    if (!isDragging.value || !isStartedInsideBoard.value) return;
+
+    if (event.touches.length > 0) {
+      const touch = event.touches[0];
+      const boardElement = event.currentTarget as HTMLElement;
+      const { x, y } = getCellCoordinatesFromTouch(touch, boardElement);
+
+      if (isValidCell(x, y)) {
+        drawCell({ x, y }, currentDrawMode.value, store);
+      }
+    }
+  };
+
+  const onTouchEnd = (): void => {
     isDragging.value = false;
     isStartedInsideBoard.value = false;
     dragStartCellState.value = null;
@@ -86,6 +129,9 @@ export const useTetrisBoard = () => {
     onMouseDown,
     onMouseMove,
     onMouseUp,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
   };
 };
 

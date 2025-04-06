@@ -5,6 +5,9 @@
       @mousedown="onMouseDown"
       @mousemove="onMouseMove"
       @mouseup="onMouseUp"
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
     >
       <div
         v-for="(rowData, rowIndex) in tetrisBoard"
@@ -32,6 +35,9 @@ const {
   onMouseDown,
   onMouseMove,
   onMouseUp,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
 } = useTetrisBoard();
 
 // Vuexから状態を取得
@@ -60,6 +66,7 @@ const getCellStyle = (cellValue: TetrisBoardCellType) => {
   background-color: #333;
   padding: 1px;
   border: 1px solid #666;
+  touch-action: none; /* タッチ操作時のデフォルト動作を無効化 */
 }
 
 .tetris-board-row {
