@@ -21,7 +21,7 @@
       </div>
 
       <div class="col-md-4">
-        <div class="d-grid gap-2">
+        <div class="d-grid gap-2 mt-3">
           <button
             class="btn btn-primary"
             type="button"
