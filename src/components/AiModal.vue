@@ -104,10 +104,12 @@ const applyResults = (): void => {
   if (selectedMoveIndex.value === undefined) return;
 
   // 共通化した関数を使用
-  if (applyMoveByIndex(selectedMoveIndex.value)) {
-    // 適用後にモーダルを閉じる
-    modalRef.value?.hide();
-  }
+  applyMoveByIndex(selectedMoveIndex.value).then((result) => {
+    if (result) {
+      // 適用後にモーダルを閉じる
+      modalRef.value?.hide();
+    }
+  });
 };
 
 // 履歴リセット
