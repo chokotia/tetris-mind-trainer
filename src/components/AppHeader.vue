@@ -3,7 +3,6 @@
     <div class="container-fluid">
       <div class="d-flex align-items-center justify-content-between w-100">
         <AppModeToggle class="ms-2" />
-        <div class="text-white">debug ver. 0.2</div>
         <div class="d-flex align-items-center">
           <button
             id="new-problem-button"
