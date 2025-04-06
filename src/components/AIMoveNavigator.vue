@@ -161,12 +161,12 @@ watch(currentMove, async (newMove) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 50px;
 }
 
 .btn-nav {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -174,7 +174,7 @@ watch(currentMove, async (newMove) => {
   background-color: rgba(255, 255, 255, 0.15);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.3);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
