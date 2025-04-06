@@ -1,4 +1,4 @@
-import { EMPTY_TETRIS_BOARD } from '../../utils/tetrisDef';
+import { EMPTY_TETRIS_BOARD, TETRIS_BOARD_CELL as CELL } from '../../utils/tetrisDef';
 import type { TetrisBoardCellType, MinoType } from '../../types/tetris';
 import storage from '../../utils/storage';
 
@@ -63,6 +63,23 @@ export default {
         return null;
       } catch (error) {
         console.error('テトリスボードの状態読み込みに失敗しました', error);
+        throw error;
+      }
+    },
+
+    // 白色（W）セルを削除するアクション
+    clearWhiteCells({ state, commit }: {
+      state: TetrisBoardState,
+      commit: (type: string, payload: unknown) => void
+    }): void {
+      try {
+        const isWhiteCell = (cell: TetrisBoardCellType) => cell === CELL.WHITE;
+        const mapCell = (cell: TetrisBoardCellType) => (isWhiteCell(cell) ? CELL.NULL : cell);
+
+        const newBoard = state.tetrisBoard.map((row) => row.map(mapCell));
+        commit('SET_TETRIS_BOARD', newBoard);
+      } catch (error) {
+        console.error('白色セルの削除に失敗しました', error);
         throw error;
       }
     },

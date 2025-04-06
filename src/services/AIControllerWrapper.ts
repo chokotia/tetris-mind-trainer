@@ -21,7 +21,10 @@ export default class AIControllerWrapper {
   }
 
   async calculateMoves(): Promise<void> {
-    // Vuexから各種値を取得
+    // AI探索前に白色セルを削除するアクションを呼び出す
+    await store.dispatch('tetrisBoard/clearWhiteCells');
+
+    // Vuexから各種値を取得（白色セル削除後）
     const tetrisBoard = store.getters['tetrisBoard/tetrisBoard'];
     const nextMino = store.getters['tetrisBoard/nextMino'];
     const holdMino = store.getters['tetrisBoard/holdMino'];
