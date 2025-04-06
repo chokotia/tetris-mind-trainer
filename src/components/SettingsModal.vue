@@ -14,7 +14,7 @@
           <select
             id="next-queue-mode"
             class="form-select"
-            :value="tempSettings.gameSettings.nextQueueMode"
+            :value="tempSettings.gameSettings?.nextQueueMode"
             @change="changeTempSettings('gameSettings.nextQueueMode', $event)"
           >
             <option :value="QUEUE_GEN_MODE.RANDOM">完全ランダム</option>
@@ -33,7 +33,7 @@
           <select
             id="ai-weights-name"
             class="form-select"
-            :value="tempSettings.aiSettings.weightsName"
+            :value="tempSettings.aiSettings?.weightsName"
             @change="changeTempSettings('aiSettings.weightsName', $event)"
           >
             <option value="freybot">freybot</option>
@@ -54,11 +54,11 @@
               min="0"
               max="1"
               step="0.1"
-              :value="tempSettings.aiSettings.searchTime"
+              :value="tempSettings.aiSettings?.searchTime"
               @input="changeTempSettings('aiSettings.searchTime', $event)"
             />
             <output for="ai-search-time" class="badge bg-secondary ms-2">
-              {{ tempSettings.aiSettings.searchTime }}
+              {{ tempSettings.aiSettings?.searchTime }}
             </output>
           </div>
         </label>
@@ -74,11 +74,11 @@
               min="5"
               max="60"
               step="5"
-              :value="tempSettings.aiSettings.movesCount"
+              :value="tempSettings.aiSettings?.movesCount"
               @input="changeTempSettings('aiSettings.movesCount', $event)"
             />
             <output for="ai-moves-count" class="badge bg-secondary ms-2">
-              {{ tempSettings.aiSettings.movesCount }}
+              {{ tempSettings.aiSettings?.movesCount }}
             </output>
           </div>
         </label>
@@ -97,12 +97,33 @@ import { QUEUE_GEN_MODE } from '@/utils/tetrisDef';
 const store = useStore();
 const settings = computed(() => store.state.settings.settings as Settings);
 const modalRef = ref<InstanceType<typeof BModal> | null>(null);
-const tempSettings = ref<Settings>({ ...settings.value });
+
+// デフォルト設定値
+const defaultSettings: Settings = {
+  gameSettings: {
+    nextQueueMode: QUEUE_GEN_MODE.SEVEN_BAG_PURE,
+  },
+  aiSettings: {
+    searchTime: 0.5,
+    movesCount: 20,
+    weightsName: 'cc_standard_like',
+  },
+};
+
+// 安全に初期化
+const tempSettings = ref<Settings>(
+  settings.value && settings.value.gameSettings && settings.value.aiSettings
+    ? { ...settings.value }
+    : { ...defaultSettings },
+);
 
 const open = () => {
   if (!modalRef.value) return;
   // モーダルを開く時に現在の設定を一時保存
-  tempSettings.value = JSON.parse(JSON.stringify(settings.value));
+  // 安全に設定をコピー
+  tempSettings.value = settings.value && settings.value.gameSettings && settings.value.aiSettings
+    ? JSON.parse(JSON.stringify(settings.value))
+    : { ...defaultSettings };
   modalRef.value.show();
 };
 
@@ -119,7 +140,9 @@ const handleOk = () => {
 
 const handleCancel = () => {
   // キャンセル時は一時保存の設定を破棄
-  tempSettings.value = JSON.parse(JSON.stringify(settings.value));
+  tempSettings.value = settings.value && settings.value.gameSettings && settings.value.aiSettings
+    ? JSON.parse(JSON.stringify(settings.value))
+    : { ...defaultSettings };
   closeModal();
 };
 
@@ -137,6 +160,10 @@ const changeTempSettings = (path: string, event: Event) => {
 
   // 最後の要素以外のパスをたどる
   for (let i = 0; i < pathArray.length - 1; i += 1) {
+    // 途中のオブジェクトが存在しない場合は作成
+    if (!current[pathArray[i]]) {
+      current[pathArray[i]] = {};
+    }
     current = current[pathArray[i]];
   }
 
