@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <!-- 背景の丸い四角形 -->
-  <rect width="100" height="100" rx="16" fill="#f3f4f6"/>
+  <rect width="100" height="100" rx="16" fill="none"/>
   
   <!-- 中央に配置した4つの四角形 -->
   <rect x="20" y="20" width="60" height="60" rx="6" fill="none"/>
