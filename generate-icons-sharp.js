@@ -14,7 +14,7 @@ const icons = [
   { size: 192, name: 'android-chrome-192x192.png' },
   { size: 512, name: 'android-chrome-512x512.png' },
   { size: 192, name: 'android-chrome-maskable-192x192.png' },
-  { size: 512, name: 'android-chrome-maskable-512x512.png' }
+  { size: 512, name: 'android-chrome-maskable-512x512.png' },
 ];
 
 async function generateIcons() {
@@ -51,7 +51,7 @@ async function generateIcons() {
   }
 }
 
-generateIcons().catch(error => {
+generateIcons().catch((error) => {
   console.error('Unhandled error:', error);
   process.exit(1);
-}); 
+});

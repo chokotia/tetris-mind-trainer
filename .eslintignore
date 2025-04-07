@@ -1,3 +1,4 @@
 # AI関連のファイルはlint対象外
 src/services/core/ai/bot/weights.js
 src/services/core/ai/bot/freybot.js 
+generate-icons-sharp.js
