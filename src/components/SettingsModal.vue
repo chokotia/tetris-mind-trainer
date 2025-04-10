@@ -83,6 +83,23 @@
           </div>
         </label>
       </div>
+      <div class="mb-3">
+        <label class="form-label" for="ai-next-size">
+          AIが探索に使用するネクスト数:
+          <select
+            id="ai-next-size"
+            class="form-select"
+            :value="tempSettings.aiSettings?.nextSize"
+            @change="changeTempSettings('aiSettings.nextSize', $event)"
+          >
+            <option value="1">1</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="100">∞</option>
+          </select>
+        </label>
+      </div>
     </form>
   </BModal>
 </template>
@@ -107,6 +124,7 @@ const defaultSettings: Settings = {
     searchTime: 0.5,
     movesCount: 20,
     weightsName: 'cc_standard_like',
+    nextSize: 5,
   },
 };
 

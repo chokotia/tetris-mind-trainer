@@ -175,22 +175,48 @@ export default class AIController extends EventEmitter {
   }
 
   /**
+   * AIに新しいピースを追加
+   * @param piece - 追加するピースの種類
+   */
+  private addPieceToQueue(piece: string): void {
+    if (!this.worker) {
+      return;
+    }
+
+    // AIにnew_pieceを送信
+    this.worker.postMessage({
+      type: 'new_piece',
+      piece,
+    });
+  }
+
+  /**
    * n手先までの計算を実行
    * @param initialGameState - 初期ゲーム状態
    * @param moves - 計算する手数
    * @param delayMs - 1手当たりの探索時間（ミリ秒）
+   * @param nextSize - AIが計算に使用するネクストの数（常にこの数だけ保持される）
    * @returns - 各手の結果
    */
   async calculateMoves(
     initialGameState: GameStateType,
     moves: number,
     delayMs = 1000,
+    nextSize = 5,
   ): Promise<AIResultType[]> {
     // クラスを初期化
     await this.initialize();
 
+    // キューを設定
+    const allQueue = [...initialGameState.queue];
+    const initialQueue = allQueue.slice(0, nextSize); // 先頭nextSize個を取得
+    const remainingQueue = allQueue.slice(nextSize); // 残りのキュー
+
     // 探索を開始する条件（盤面やネクスト、ホールド等）をAIに渡す
-    this.start(initialGameState);
+    this.start({
+      ...initialGameState,
+      queue: initialQueue,
+    });
 
     // 探索を開始する条件も履歴の最初のmoveとして返す
     const firstMove = JSON.parse(JSON.stringify({
@@ -219,6 +245,14 @@ export default class AIController extends EventEmitter {
       if (suggestion && suggestion.bestMove) {
         results.push(suggestion.bestMove);
         this.applyMove(suggestion.bestMove.move);
+
+        // 残りのキューから新しいミノを追加
+        if (remainingQueue.length > 0) {
+          const nextPiece = remainingQueue.shift();
+          if (nextPiece) {
+            this.addPieceToQueue(nextPiece);
+          }
+        }
       }
     }
 

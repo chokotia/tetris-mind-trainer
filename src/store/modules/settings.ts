@@ -15,6 +15,7 @@ const DEFAULT_SETTINGS: Settings = {
     searchTime: 0.5,
     movesCount: 20,
     weightsName: AI_WEIGHT.CC_STANDARD_LIKE,
+    nextSize: 5,
   },
 };
 

@@ -28,7 +28,9 @@ export default class AIControllerWrapper {
     const tetrisBoard = store.getters['tetrisBoard/tetrisBoard'];
     const nextMino = store.getters['tetrisBoard/nextMino'];
     const holdMino = store.getters['tetrisBoard/holdMino'];
-    const { movesCount, searchTime, weightsName } = store.getters['settings/settings'].aiSettings;
+    const {
+      movesCount, searchTime, weightsName, nextSize,
+    } = store.getters['settings/settings'].aiSettings;
 
     const initialGameState: GameStateType = JSON.parse(JSON.stringify({
       weightsName,
@@ -46,6 +48,7 @@ export default class AIControllerWrapper {
       initialGameState,
       movesCount,
       searchTime * 1000, // 秒をミリ秒に変換
+      nextSize + 2, // ホールドおよび、盤面内で使用するミノ分をプラス
     );
 
     // 計算結果をvuexに保存
