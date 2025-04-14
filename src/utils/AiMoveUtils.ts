@@ -8,8 +8,8 @@ const getPositionRangeDisplay = (location: PieceLocationType): string => {
     return `x:${location.x}-?, y:${location.y}-?`;
   }
 
-  const xValues = location.blockPositions.map((pos) => location.x + pos.x);
-  const yValues = location.blockPositions.map((pos) => location.y + pos.y);
+  const xValues = location.blockPositions.map((pos) => pos.x);
+  const yValues = location.blockPositions.map((pos) => pos.y);
 
   const minX = Math.min(...xValues);
   const maxX = Math.max(...xValues);
