@@ -16,6 +16,7 @@ const DEFAULT_SETTINGS: Settings = {
     movesCount: 20,
     weightsName: AI_WEIGHT.CC_STANDARD_LIKE,
     nextSize: 5,
+    avoidPerfectClear: true,
   },
 };
 

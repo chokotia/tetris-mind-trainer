@@ -1377,6 +1377,11 @@ onmessage = function(t) {
             bot.loadWeights(weights[e.weightsName]);
         }
 
+        if (e.avoidPerfectClear) {
+            bot.settings.weights.perfect_clear = -999
+            console.log("avoid perfect_clear: ", bot.settings.weights.perfect_clear)
+        }
+
         let t = {
             hold: e.hold,
             queue: e.queue,

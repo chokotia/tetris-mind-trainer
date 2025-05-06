@@ -5,4 +5,5 @@ export interface AISettings {
   movesCount: number;
   weightsName: AiWeightType;
   nextSize: number;
+  avoidPerfectClear: boolean;
 }

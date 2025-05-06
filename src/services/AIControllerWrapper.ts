@@ -29,7 +29,7 @@ export default class AIControllerWrapper {
     const nextMino = store.getters['tetrisBoard/nextMino'];
     const holdMino = store.getters['tetrisBoard/holdMino'];
     const {
-      movesCount, searchTime, weightsName, nextSize,
+      movesCount, searchTime, weightsName, nextSize, avoidPerfectClear,
     } = store.getters['settings/settings'].aiSettings;
 
     const initialGameState: GameStateType = JSON.parse(JSON.stringify({
@@ -39,6 +39,7 @@ export default class AIControllerWrapper {
       hold: holdMino,
       combo: 0,
       backToBack: false,
+      avoidPerfectClear,
     }));
 
     console.log('[AIControllerWrapper] initialGameState', initialGameState);

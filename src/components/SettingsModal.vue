@@ -100,6 +100,20 @@
           </select>
         </label>
       </div>
+      <div class="mb-3">
+        <label class="form-check" for="avoid-perfect-clear">
+          <input
+            id="avoid-perfect-clear"
+            type="checkbox"
+            class="form-check-input"
+            :checked="tempSettings.aiSettings?.avoidPerfectClear"
+            @change="changeTempSettings('aiSettings.avoidPerfectClear', $event)"
+          />
+          <span class="form-check-label">
+            PCを狙わないようにする
+          </span>
+        </label>
+      </div>
     </form>
   </BModal>
 </template>
@@ -125,6 +139,7 @@ const defaultSettings: Settings = {
     movesCount: 20,
     weightsName: 'cc_standard_like',
     nextSize: 5,
+    avoidPerfectClear: true,
   },
 };
 
@@ -166,7 +181,16 @@ const handleCancel = () => {
 
 const changeTempSettings = (path: string, event: Event) => {
   const target = event.target as HTMLInputElement;
-  const value = target.type === 'range' ? Number(target.value) : target.value;
+  const value = (() => {
+    switch (target.type) {
+      case 'range':
+        return Number(target.value);
+      case 'checkbox':
+        return (target as HTMLInputElement).checked;
+      default:
+        return target.value;
+    }
+  })();
 
   // パスを配列に分割
   const pathArray = path.split('.');

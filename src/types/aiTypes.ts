@@ -20,6 +20,7 @@ export type GameStateType = {
   hold: MinoType | null;
   combo: number;
   backToBack: boolean;
+  avoidPerfectClear: boolean;
 }
 
 // ミノの位置情報
