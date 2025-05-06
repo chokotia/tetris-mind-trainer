@@ -52,7 +52,7 @@
               type="range"
               class="form-range flex-grow-1"
               min="0"
-              max="2"
+              max="3"
               step="0.1"
               :value="tempSettings.aiSettings?.searchTime"
               @input="changeTempSettings('aiSettings.searchTime', $event)"
